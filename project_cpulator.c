@@ -165,7 +165,7 @@ void waitForVSync();
 
 
 void draw_controlled_cell(int x, int y, short);
-void faster_clear_screen();// realized that this function should only be implemented in the end
+void faster_clear_screen(int x, int y);// realized that this function should only be implemented in the end
 //void draw_controlled_image(int x, int y);
 //void draw_background();
 void draw_controlled_akame(int x, int y);
@@ -223,7 +223,7 @@ int main(void)
 	
     
     while (true) {
-        //clear_screen();
+        clear_screen();
 		//draw_background();
 			//testing draw the controlled cell
 		if((*key_address) == 1){
@@ -366,12 +366,21 @@ void waitForVSync() {
 }
 
 //faster clear screen
-void faster_clear_screen() {// realized that this function should only be implemented in the end
-    for (unsigned short x = 0; x < MAX_X; x++) {
-        for (unsigned short y = 0; y < MAX_Y; y++) {
-            plot_pixel(x, y, 0xFFFF);    // this is white
-        }
+void faster_clear_screen(int x, int y) {// realized that this function should only be implemented in the end
+   // for (unsigned short x = 0; x < MAX_X; x++) {
+   //     for (unsigned short y = 0; y < MAX_Y; y++) {
+   //         plot_pixel(x, y, 0xFFFF);    // this is white
+   //     }
+   // }
+	
+	for (unsigned short i = 0; i < 68; i++) {
+		int k = 0;
+    	for (unsigned short j = 0; j < (160); (j= j+2 )){
+    		plot_pixel(x +k , y + i, 0xFFFF );//0xF000
+			k++;
+		}
     }
+	
 }
 
 // End of project.c
