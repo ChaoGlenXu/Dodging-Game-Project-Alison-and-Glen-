@@ -16,6 +16,7 @@
 #define FPGA_CHAR_BASE        0xC9000000
 #define FPGA_CHAR_END         0xC9001FFF
 
+
 /* Cyclone V FPGA devices */
 #define LEDR_BASE             0xFF200000
 #define HEX3_HEX0_BASE        0xFF200020
@@ -122,9 +123,9 @@ int main(void)
 	while (true) {
 		clear_screen();
 		
-		for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
-			draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
-		}
+		//for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
+		//	draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
+		//}
 		
 		for (int i = 0; i < MAX_RECTANGLES; i++) {
 			draw_box(x_box[i], y_box[i], color_box[i]);
@@ -223,3 +224,5 @@ void waitForVSync() {
 }
 
 // End of project.c
+
+ 
