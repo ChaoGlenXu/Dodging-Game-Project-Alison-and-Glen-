@@ -227,19 +227,24 @@ int main(void)
 		//draw_background();
 			//testing draw the controlled cell
 		if((*key_address) == 1){
-			draw_controlled_cell(x_controlled, y_controlled++,0xF000);
+			//draw_controlled_cell(x_controlled, y_controlled++,0xF000);
+			draw_controlled_akame(x_controlled, y_controlled++);
 		}	
 		if((*key_address) == 2){
-			draw_controlled_cell(x_controlled, y_controlled--,0xF000);
+			//draw_controlled_cell(x_controlled, y_controlled--,0xF000);
+			draw_controlled_akame(x_controlled, y_controlled--);
 		}
 		if((*key_address) == 4){
-			draw_controlled_cell(x_controlled++, y_controlled,0xF000);
+			//draw_controlled_cell(x_controlled++, y_controlled,0xF000);
+			draw_controlled_akame(x_controlled++, y_controlled);
 		}
 		if((*key_address) == 8){
-			draw_controlled_cell(x_controlled--, y_controlled,0xF000);
+			//draw_controlled_cell(x_controlled--, y_controlled,0xF000);
+			draw_controlled_akame(x_controlled--, y_controlled);
 		}
 		if((*key_address) == 0){
-			draw_controlled_cell(x_controlled, y_controlled,0xF000);
+			//draw_controlled_cell(x_controlled, y_controlled,0xF000);
+			draw_controlled_akame(x_controlled, y_controlled);
 		}
 		
         
@@ -247,7 +252,7 @@ int main(void)
 		//testing draw the image
 		//draw_controlled_image(100, 100);
 		//draw_akame();
-		draw_controlled_akame(100, 100);
+		//draw_controlled_akame(100, 100);
 		
 		
        // for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
