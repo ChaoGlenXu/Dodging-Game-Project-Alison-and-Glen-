@@ -81,7 +81,7 @@ void swap(int*, int*);
 void plot_pixel(int, int, short);
 void waitForVSync();
     
-void draw_controlled_cell(int x, int y);
+void draw_controlled_cell(int x, int y, short);
 
 
 volatile int pixel_buffer_start; // global variable
@@ -136,19 +136,19 @@ int main(void)
 		
 			//testing draw the controlled cell
 		if((*key_address) == 1){
-			draw_controlled_cell(x_controlled, y_controlled++);
+			draw_controlled_cell(x_controlled, y_controlled++,0xF000);
 		}	
 		if((*key_address) == 2){
-			draw_controlled_cell(x_controlled, y_controlled--);
+			draw_controlled_cell(x_controlled, y_controlled--,0xF000);
 		}
 		if((*key_address) == 4){
-			draw_controlled_cell(x_controlled++, y_controlled);
+			draw_controlled_cell(x_controlled++, y_controlled,0xF000);
 		}
 		if((*key_address) == 8){
-			draw_controlled_cell(x_controlled--, y_controlled);
+			draw_controlled_cell(x_controlled--, y_controlled,0xF000);
 		}
 		if((*key_address) == 0){
-			draw_controlled_cell(x_controlled, y_controlled);
+			draw_controlled_cell(x_controlled, y_controlled,0xF000);
 		}
 		
         
@@ -197,6 +197,8 @@ void clear_screen() {
     }
 }
 
+
+
 void draw_line(int x0, int y0, int x1, int y1, short color) {
     bool isSteep = abs(y1 - y0) > abs (x1 - x0);
     
@@ -239,10 +241,10 @@ void draw_box(int x, int y, short color) {
     }
 }
 
-void draw_controlled_cell(int x, int y) {
+void draw_controlled_cell(int x, int y, short line_color) {
     for (unsigned short i = 0; i < 10; i++) {
         for (unsigned short j = 0; j < 10; j++)
-            plot_pixel(x + i, y + j, 0xF000);
+            plot_pixel(x + i, y + j, line_color);//0xF000
     }
 }
 
@@ -257,6 +259,15 @@ void waitForVSync() {
     
     while ((status & 0x01) != 0) {
         status = *(pixel_ctrl_ptr + 3);
+    }
+}
+
+//faster clear screen
+void faster_clear_screen() {
+    for (unsigned short x = 0; x < MAX_X; x++) {
+        for (unsigned short y = 0; y < MAX_Y; y++) {
+            plot_pixel(x, y, 0xFFFF);    // this is white
+        }
     }
 }
 
