@@ -89,6 +89,9 @@ volatile int pixel_buffer_start; // global variable
 int x_controlled = 20;
 int y_controlled = 20;
 
+volatile int* key_address = (int *)KEY_BASE;// we can extract the data for whether pressed or not by look at the value at this address
+// int check_key_press = *key_address;
+
 int main(void)
 {
     
@@ -132,13 +135,14 @@ int main(void)
         clear_screen();
 		
 			//testing draw the controlled cell
-	draw_controlled_cell(x_controlled, y_controlled);
-		
+		if((*key_address) == 1){
+			draw_controlled_cell(x_controlled, y_controlled++);
+		}
 		
         
-   //     for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
-    //        draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
-    //    }
+        for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
+            draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
+        }
         
         for (int i = 0; i < MAX_RECTANGLES; i++) {
             draw_box(x_box[i], y_box[i], color_box[i]);
