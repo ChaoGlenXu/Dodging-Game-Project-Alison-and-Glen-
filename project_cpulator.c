@@ -82,7 +82,7 @@ void plot_pixel(int, int, short);
 void waitForVSync();
     
 void draw_controlled_cell(int x, int y, short);
-
+void faster_clear_screen();// realized that this function should only be implemented in the end
 
 volatile int pixel_buffer_start; // global variable
 
@@ -263,7 +263,7 @@ void waitForVSync() {
 }
 
 //faster clear screen
-void faster_clear_screen() {
+void faster_clear_screen() {// realized that this function should only be implemented in the end
     for (unsigned short x = 0; x < MAX_X; x++) {
         for (unsigned short y = 0; y < MAX_Y; y++) {
             plot_pixel(x, y, 0xFFFF);    // this is white
@@ -272,6 +272,3 @@ void faster_clear_screen() {
 }
 
 // End of project.c
-
- 
-
