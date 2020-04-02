@@ -147,6 +147,10 @@ int main(void)
 		if((*key_address) == 8){
 			draw_controlled_cell(x_controlled--, y_controlled);
 		}
+		if((*key_address) == 0){
+			draw_controlled_cell(x_controlled, y_controlled);
+		}
+		
         
         for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
             draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
