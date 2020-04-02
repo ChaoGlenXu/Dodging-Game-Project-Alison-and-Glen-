@@ -136,9 +136,9 @@ int main(void)
 		
 		
         
-        for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
-            draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
-        }
+   //     for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
+    //        draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
+    //    }
         
         for (int i = 0; i < MAX_RECTANGLES; i++) {
             draw_box(x_box[i], y_box[i], color_box[i]);
