@@ -278,6 +278,10 @@ void draw_controlled_akame(int x, int y);
 void draw_controlled_esdeath(int x, int y);
 void draw_controlled_seryu(int x, int y) ;
 
+
+void draw_controlled_grid(int x, int y);
+void new_clear_screen();
+
 volatile int pixel_buffer_start; // global variable
 
 int x_controlled = 20;
@@ -290,10 +294,12 @@ int main(void)
 {
     
     volatile int * pixel_ctrl_ptr = (int *)PIXEL_BUF_CTRL_BASE;
-    
+    //	                red.           orange    musturd
     short colors[20] = {0xF800, 0xFC80, 0xFE60, 0xFFC0, 0xDFE0,
-                        0x97E0, 0x1FE0, 0x2628, 0x07F7, 0x07FF,
+                       
+						0x97E0, 0x1FE0, 0x2628, 0x07F7, 0x07FF,
                         0x073F, 0x063F, 0x04DF, 0x03BF, 0x22B9,
+				     //blue   LightPurple  purple          //pink
                         0x101F, 0xAB5F, 0xA81F, 0xE01F, 0xF81C};
     
     short color_box[MAX_RECTANGLES],
@@ -331,7 +337,7 @@ int main(void)
 	
     
     while (true) {
-        clear_screen();
+        new_clear_screen();
 		//faster_clear_screen(x_controlled, y_controlled);
 		//draw_background();
 			//testing draw the controlled cell
@@ -561,6 +567,23 @@ void draw_controlled_image(int x, int y) {
     }
 }
 
+//draw_controlled_cell
+void draw_controlled_grid(int x, int y) {
+
+	draw_controlled_cell(x,y, 0x22B9);
+	draw_controlled_cell(x+10,y, 0xffff);
+	draw_controlled_cell(x,y+10, 0xffff);
+	draw_controlled_cell(x+10,y+10, 0x22B9);
+}
+
+void new_clear_screen() {
+    for (unsigned short x = 0; x < MAX_X; x= x +20) {
+        for (unsigned short y = 0; y < MAX_Y; y = y +20) {
+            //plot_pixel(x, y, 0xFFFF);    // this is white
+			draw_controlled_grid( x, y);
+        }
+    }
+}
 
 //background
 //void draw_background(){
@@ -583,5 +606,6 @@ void draw_controlled_image(int x, int y) {
 //		  plot_pixel(akame[i/80] , akame[i%(68)] ,   ((akame[i]<< 11) + (akame[i+1] << 5) + (akame[i+2]))    ) ;
 //	}
 //}
+
 
 	
