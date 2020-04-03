@@ -378,9 +378,7 @@ int main(void)
 			if(i != 3){draw_box(x_box[i], y_box[i], color_box[i]);}
             
             
-			draw_controlled_esdeath(x_box[5], y_box[5]);
-			 draw_controlled_seryu(x_box[3], y_box[3]); 
-			draw_controlled_image(x_box[1], y_box[1]);
+
 			
             x_box[i] += dx_box[i];
             y_box[i] += dy_box[i];
@@ -395,7 +393,11 @@ int main(void)
             else if (y_box[i] > MAX_Y - 4)
                 dy_box[i] = -1;
         }
-        
+        			draw_controlled_esdeath(x_box[5], y_box[5]);
+			 draw_controlled_seryu(x_box[3], y_box[3]); 
+			draw_controlled_image(x_box[1], y_box[1]);
+		
+		
         waitForVSync();
         pixel_buffer_start = *(pixel_ctrl_ptr + 1);
     }
@@ -570,10 +572,10 @@ void draw_controlled_image(int x, int y) {
 //draw_controlled_cell
 void draw_controlled_grid(int x, int y) {
 
-	draw_controlled_cell(x,y, 0x22B9);
+	draw_controlled_cell(x,y, 0x03BF);
 	draw_controlled_cell(x+10,y, 0xffff);
 	draw_controlled_cell(x,y+10, 0xffff);
-	draw_controlled_cell(x+10,y+10, 0x22B9);
+	draw_controlled_cell(x+10,y+10, 0x03BF);
 }
 
 void new_clear_screen() {
