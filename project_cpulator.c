@@ -240,7 +240,8 @@ int akame[68][160] ={
     
 #include <stdbool.h>
 #include <stdlib.h>
-    
+#include <stdio.h>
+	
 #define MAX_X 320
 #define MAX_Y 240
 #define MAX_RECTANGLES 4
@@ -353,7 +354,8 @@ int main(void)
        // }
         
         for (int i = 0; i < MAX_RECTANGLES; i++) {
-            draw_box(x_box[i], y_box[i], color_box[i]);
+			if(i != 3){draw_box(x_box[i], y_box[i], color_box[i]);}
+            
             
 			draw_controlled_esdeath(x_box[0], y_box[0]);
 			 draw_controlled_seryu(x_box[3], y_box[3]); 
@@ -496,9 +498,10 @@ void draw_controlled_akame(int x, int y) {
     for (unsigned short i = 0; i < 68; i++) {
 		int k = 0;
         for (unsigned short j = 0; j < (160); (j= j+2 )){
-            plot_pixel(x +k , y + i, (((akame[i][j+1])<< 8) + ((akame[i][j]) ) ) );//0xF000
-			k++;
-			}
+            	plot_pixel(x +k , y + i, (((akame[i][j+1])<< 8) + ((akame[i][j]) ) ) );//0xF000
+				k++;
+			
+		}
     }
 }
 
@@ -508,8 +511,14 @@ void draw_controlled_esdeath(int x, int y) {
     for (unsigned short i = 0; i < 37; i++) {
 		int k = 0;
         for (unsigned short j = 0; j < (80); (j= j+2 )){
+			//if((((esdeath[i][j+1])<< 8) + ((esdeath[i][j]) ) ) == 0xFFDF){
+				
+			//}else{
+			
             plot_pixel(x +k , y + i, (((esdeath[i][j+1])<< 8) + ((esdeath[i][j]) ) ) );//0xF000
 			k++;
+			//}
+			//printf ((esdeath[i][j+1]<< 8) + esdeath[i][j]  );
 			}
     }
 }
@@ -520,7 +529,11 @@ void draw_controlled_seryu(int x, int y) {
     for (unsigned short i = 0; i < 46; i++) {
 		int k = 0;
         for (unsigned short j = 0; j < (120); (j= j+2 )){
-            plot_pixel(x +k , y + i, (((seryu[i][j+1])<< 8) + ((seryu[i][j]) ) ) );//0xF000
+			if((((seryu[i][j+1])<< 8) + ((seryu[i][j]) ) ) == 0x0000){
+				//plot_pixel(x +k , y + i, 0xFFDF );	
+			}else{
+            	plot_pixel(x +k , y + i, (((seryu[i][j+1])<< 8) + ((seryu[i][j]) ) ) );//0xF000
+			}
 			k++;
 			}
     }
