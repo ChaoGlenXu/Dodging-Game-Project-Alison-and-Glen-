@@ -529,9 +529,13 @@ void draw_controlled_akame(int x, int y) {
 			if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[0][0+1]<< 8) + akame[0][0]  ){
 			
 			}else{
-				
-            	plot_pixel(x +k , y + i, (akame[i][j+1]<< 8) + akame[i][j]   );//0xF000
-				
+				if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[0][1+1]<< 8) + akame[0][1]  ){
+				}else{	
+					if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[3][9+1]<< 8) + akame[3][9]  ){
+					}else{	
+            		plot_pixel(x +k , y + i, (akame[i][j+1]<< 8) + akame[i][j]   );//0xF000
+					}	
+				}
 			}
 			k++;
 		}
