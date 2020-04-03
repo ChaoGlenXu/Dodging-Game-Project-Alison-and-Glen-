@@ -525,9 +525,15 @@ void draw_controlled_akame(int x, int y) {
     for (unsigned short i = 0; i < 68; i++) {
 		int k = 0;
         for (unsigned short j = 0; j < (160); (j= j+2 )){
-            	plot_pixel(x +k , y + i, (((akame[i][j+1])<< 8) + ((akame[i][j]) ) ) );//0xF000
-				k++;
 			
+			if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[0][0+1]<< 8) + akame[0][0]  ){
+			
+			}else{
+				
+            	plot_pixel(x +k , y + i, (akame[i][j+1]<< 8) + akame[i][j]   );//0xF000
+				
+			}
+			k++;
 		}
     }
 }
@@ -576,7 +582,7 @@ void draw_controlled_image(int x, int y) {
 //draw_controlled_cell
 void draw_controlled_grid(int x, int y) {
 
-	draw_controlled_cell(x,y, 0x04DF);
+	draw_controlled_cell(x,y, (akame[0][0+1]<< 8) + akame[0][0]);//0x04DF
 	draw_controlled_cell(x+10,y, 0xffff);
 	draw_controlled_cell(x,y+10, 0xffff);
 	draw_controlled_cell(x+10,y+10, 0x04DF);
