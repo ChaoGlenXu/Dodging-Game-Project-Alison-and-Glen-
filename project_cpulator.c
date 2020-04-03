@@ -259,7 +259,7 @@ int akame[68][160] ={
 	
 #define MAX_X 320
 #define MAX_Y 240
-#define MAX_RECTANGLES 7
+#define MAX_RECTANGLES 8
     
 void clear_screen();
 void draw_line(int, int, int, int, short);
@@ -375,7 +375,7 @@ int main(void)
        // }
         
         for (int i = 0; i < MAX_RECTANGLES; i++) {
-			if(i != 3){draw_box(x_box[i], y_box[i], color_box[i]);}
+			//if((i != 3)||(i != 2)||(i != 4)||(i != 6)||(i != 1)){draw_box(x_box[i], y_box[i], color_box[i]);}
             
             
 
@@ -396,6 +396,10 @@ int main(void)
         			draw_controlled_esdeath(x_box[5], y_box[5]);
 			 draw_controlled_seryu(x_box[3], y_box[3]); 
 			draw_controlled_image(x_box[1], y_box[1]);
+		draw_controlled_image(x_box[2], y_box[2]);
+		draw_controlled_image(x_box[4], y_box[4]);
+		draw_controlled_image(x_box[6], y_box[6]);
+		
 		
 		
         waitForVSync();
@@ -572,10 +576,10 @@ void draw_controlled_image(int x, int y) {
 //draw_controlled_cell
 void draw_controlled_grid(int x, int y) {
 
-	draw_controlled_cell(x,y, 0x03BF);
+	draw_controlled_cell(x,y, 0x04DF);
 	draw_controlled_cell(x+10,y, 0xffff);
 	draw_controlled_cell(x,y+10, 0xffff);
-	draw_controlled_cell(x+10,y+10, 0x03BF);
+	draw_controlled_cell(x+10,y+10, 0x04DF);
 }
 
 void new_clear_screen() {
