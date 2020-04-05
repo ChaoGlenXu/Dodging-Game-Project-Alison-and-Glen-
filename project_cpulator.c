@@ -333,7 +333,7 @@ int akame[AKAME_HEIGHT][AKAME_LENGTH*2] ={
 	
 #define MAX_X 320
 #define MAX_Y 240
-#define MAX_RECTANGLES 3
+#define MAX_RECTANGLES 10
     
 void clear_screen();
 void draw_line(int, int, int, int, short);
@@ -387,21 +387,21 @@ int main(void)
         y_box[MAX_RECTANGLES],
 		x_esdeath = rand() % (MAX_X - 40 - AKAME_LENGTH) + AKAME_LENGTH,
 		y_esdeath = rand() % (MAX_Y - 37 - AKAME_HEIGHT) + AKAME_HEIGHT,
-		dx_esdeath = (rand() % 2) * 2 + 1,
-		dy_esdeath = (rand() % 2) * 2 + 1,
+		dx_esdeath = (rand() % 2) * 2 - 1,
+		dy_esdeath = (rand() % 2) * 2 - 1,
 		x_seryu = rand() % (MAX_X - 60 - AKAME_LENGTH) + AKAME_LENGTH,
 		y_seryu = rand() % (MAX_Y - 46 - AKAME_HEIGHT) + AKAME_HEIGHT,
-		dx_seryu = (rand() % 2) * 2 + 1,
-		dy_seryu = (rand() % 2) * 2 + 1,
+		dx_seryu = (rand() % 2) * 2 - 1,
+		dy_seryu = (rand() % 2) * 2 - 1,
 		x_kurame = rand() % (MAX_X - 58 - AKAME_LENGTH) + AKAME_LENGTH,
 		y_kurame = rand() % (MAX_Y - 60 - AKAME_HEIGHT) + AKAME_HEIGHT,
-		dx_kurame = (rand() % 2) * 2 + 1,
-		dy_kurame = (rand() % 2) * 2 + 1;
+		dx_kurame = (rand() % 2) * 2 - 1,
+		dy_kurame = (rand() % 2) * 2 - 1;
     
     for (int i = 0; i < MAX_RECTANGLES; i++) {
         color_box[i] = colors[rand() % 20];
-        dx_box[i] = (rand() % 2) * 2 + 1;
-        dy_box[i] = (rand() % 2) * 2 + 1;
+        dx_box[i] = (rand() % 2) * 2 - 1;
+        dy_box[i] = (rand() % 2) * 2 - 1;
         x_box[i] = rand() % (MAX_X - 13 - AKAME_LENGTH) + AKAME_LENGTH;
         y_box[i] = rand() % (MAX_Y - 13 - AKAME_HEIGHT) + AKAME_HEIGHT;
     }
@@ -448,21 +448,21 @@ int main(void)
 		//faster_clear_screen(x_controlled, y_controlled);
 		//draw_background();
 			//testing draw the controlled cell
-		if((*key_address) & 0x1  && y_controlled < MAX_Y - AKAME_HEIGHT) {
+		if((*key_address) & 0x4  && y_controlled < MAX_Y - AKAME_HEIGHT) {
 			//draw_controlled_cell(x_controlled, y_controlled++,0xF000);
-			y_controlled++;
+			y_controlled+=2;
 		}	
 		if((*key_address) & 0x2 && y_controlled > 0) {
 			//draw_controlled_cell(x_controlled, y_controlled--,0xF000);
-			y_controlled--;
+			y_controlled-=2;
 		}
-		if((*key_address) & 0x4 && x_controlled < MAX_X - AKAME_LENGTH) {
+		if((*key_address) & 0x1 && x_controlled < MAX_X - AKAME_LENGTH) {
 			//draw_controlled_cell(x_controlled++, y_controlled,0xF000);
-			x_controlled++;
+			x_controlled+=2;
 		}
 		if((*key_address) & 0x8 && x_controlled > 0) {
 			//draw_controlled_cell(x_controlled--, y_controlled,0xF000);
-			x_controlled--;
+			x_controlled-=2;
 		}
 		draw_controlled_akame(x_controlled, y_controlled);
         
@@ -482,15 +482,23 @@ int main(void)
             x_box[i] += dx_box[i];
             y_box[i] += dy_box[i];
             
-            if (x_box[i] <= 0)
+            if (x_box[i] <= 0) {
                 dx_box[i] = 1;
-            else if (x_box[i] >= MAX_X - 13)        // The four is from box width/height
+				dy_box[i] = (rand() % 2) * 2 - 1;
+			}
+            else if (x_box[i] >= MAX_X - VIRUS_LENGTH) {        // The four is from box width/height
                 dx_box[i] = -1;
+				dy_box[i] = (rand() % 2) * 2 - 1;
+			}
 
-            if (y_box[i] <= 0)
+            if (y_box[i] <= 0) {
                 dy_box[i] = 1;
-            else if (y_box[i] >= MAX_Y - 13)
+				dx_box[i] = (rand() % 2) * 2 - 1;
+			}
+            else if (y_box[i] >= MAX_Y - VIRUS_HEIGHT) {
                 dy_box[i] = -1;
+				dx_box[i] = (rand() % 2) * 2 - 1;
+			}
 			
 			draw_controlled_image(x_box[i], y_box[i]);
         }

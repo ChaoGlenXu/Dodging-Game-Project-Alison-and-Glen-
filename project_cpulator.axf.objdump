@@ -1,0 +1,2060 @@
+
+C:/Users/aliso/Documents/ECE243/ECE243-Final-Project-Alison-and-Glen-/project_cpulator.axf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <__cs3_interrupt_vector>:
+       0:	18 f0 9f e5 18 f0 9f e5 18 f0 9f e5 18 f0 9f e5     ................
+      10:	18 f0 9f e5 18 f0 9f e5 18 f0 9f e5 18 f0 9f e5     ................
+      20:	40 00 00 00 7c 13 00 00 80 13 00 00 84 13 00 00     @...|...........
+      30:	88 13 00 00 78 13 00 00 8c 13 00 00 90 13 00 00     ....x...........
+
+00000040 <__cs3_reset>:
+      40:	ea000026 	b	e0 <__cs3_start_asm_sim>
+
+00000044 <__cs3_start_c>:
+      44:	e59f608c 	ldr	r6, [pc, #140]	; d8 <__cs3_start_c+0x94>
+      48:	e3560000 	cmp	r6, #0
+      4c:	e92d4080 	push	{r7, lr}
+      50:	e2466001 	sub	r6, r6, #1
+      54:	0a00001e 	beq	d4 <__cs3_start_c+0x90>
+      58:	e59f507c 	ldr	r5, [pc, #124]	; dc <__cs3_start_c+0x98>
+      5c:	e3a00000 	mov	r0, #0
+      60:	e3a01000 	mov	r1, #0
+      64:	e515200c 	ldr	r2, [r5, #-12]
+      68:	e515e010 	ldr	lr, [r5, #-16]
+      6c:	e5154008 	ldr	r4, [r5, #-8]
+      70:	e15e0002 	cmp	lr, r2
+      74:	00822004 	addeq	r2, r2, r4
+      78:	0a000009 	beq	a4 <__cs3_start_c+0x60>
+      7c:	e3540000 	cmp	r4, #0
+      80:	0a000007 	beq	a4 <__cs3_start_c+0x60>
+      84:	e1a07002 	mov	r7, r2
+      88:	e1a0c002 	mov	r12, r2
+      8c:	e8be000c 	ldm	lr!, {r2, r3}
+      90:	e8ac000c 	stmia	r12!, {r2, r3}
+      94:	e067300c 	rsb	r3, r7, r12
+      98:	e1540003 	cmp	r4, r3
+      9c:	e1a0200c 	mov	r2, r12
+      a0:	1afffff9 	bne	8c <__cs3_start_c+0x48>
+      a4:	e515e004 	ldr	lr, [r5, #-4]
+      a8:	e35e0000 	cmp	lr, #0
+      ac:	11a03002 	movne	r3, r2
+      b0:	0a000003 	beq	c4 <__cs3_start_c+0x80>
+      b4:	e8a30003 	stmia	r3!, {r0, r1}
+      b8:	e062c003 	rsb	r12, r2, r3
+      bc:	e15e000c 	cmp	lr, r12
+      c0:	1afffffb 	bne	b4 <__cs3_start_c+0x70>
+      c4:	e2466001 	sub	r6, r6, #1
+      c8:	e3760001 	cmn	r6, #1
+      cc:	e2855014 	add	r5, r5, #20
+      d0:	1affffe3 	bne	64 <__cs3_start_c+0x20>
+      d4:	eb00048e 	bl	1314 <__cs3_premain>
+      d8:	00000001 	.word	0x00000001
+      dc:	00001478 	.word	0x00001478
+
+000000e0 <__cs3_start_asm_sim>:
+      e0:	e28f103c 	add	r1, pc, #60	; 0x3c
+      e4:	e3a00016 	mov	r0, #22
+      e8:	ef123456 	svc	0x00123456
+      ec:	e3500000 	cmp	r0, #0
+      f0:	ba000008 	blt	118 <__cs3_start_asm_sim+0x38>
+      f4:	e59f2028 	ldr	r2, [pc, #40]	; 124 <__cs3_heap_start_ptr>
+      f8:	e59fd01c 	ldr	sp, [pc, #28]	; 11c <__cs3_start_asm_sim+0x3c>
+      fc:	e5920008 	ldr	r0, [r2, #8]
+     100:	e3500000 	cmp	r0, #0
+     104:	11a0d000 	movne	sp, r0
+     108:	e59f1010 	ldr	r1, [pc, #16]	; 120 <__cs3_start_asm_sim+0x40>
+     10c:	e5920004 	ldr	r0, [r2, #4]
+     110:	e3500000 	cmp	r0, #0
+     114:	15810000 	strne	r0, [r1]
+     118:	eaffffc9 	b	44 <__cs3_start_c>
+     11c:	3ffffff8 	.word	0x3ffffff8
+     120:	0001b698 	.word	0x0001b698
+
+00000124 <__cs3_heap_start_ptr>:
+     124:	0001b6c8 	.word	0x0001b6c8
+
+00000128 <_start>:
+     128:	e51fd000 	ldr	sp, [pc, #-0]	; 130 <_start+0x8>
+     12c:	eaffffc4 	b	44 <__cs3_start_c>
+     130:	3ffffff8 	.word	0x3ffffff8
+
+00000134 <deregister_tm_clones>:
+     134:	e92d4008 	push	{r3, lr}
+     138:	e59f002c 	ldr	r0, [pc, #44]	; 16c <deregister_tm_clones+0x38>
+     13c:	e59f302c 	ldr	r3, [pc, #44]	; 170 <deregister_tm_clones+0x3c>
+     140:	e0603003 	rsb	r3, r0, r3
+     144:	e3530006 	cmp	r3, #6
+     148:	8a000001 	bhi	154 <deregister_tm_clones+0x20>
+     14c:	e8bd4008 	pop	{r3, lr}
+     150:	e12fff1e 	bx	lr
+     154:	e59f3018 	ldr	r3, [pc, #24]	; 174 <deregister_tm_clones+0x40>
+     158:	e3530000 	cmp	r3, #0
+     15c:	0afffffa 	beq	14c <deregister_tm_clones+0x18>
+     160:	e1a0e00f 	mov	lr, pc
+     164:	e12fff13 	bx	r3
+     168:	eafffff7 	b	14c <deregister_tm_clones+0x18>
+     16c:	0001b6a0 	.word	0x0001b6a0
+     170:	0001b6a3 	.word	0x0001b6a3
+     174:	00000000 	.word	0x00000000
+
+00000178 <register_tm_clones>:
+     178:	e92d4008 	push	{r3, lr}
+     17c:	e59f0034 	ldr	r0, [pc, #52]	; 1b8 <register_tm_clones+0x40>
+     180:	e59f3034 	ldr	r3, [pc, #52]	; 1bc <register_tm_clones+0x44>
+     184:	e0603003 	rsb	r3, r0, r3
+     188:	e1a03143 	asr	r3, r3, #2
+     18c:	e0833fa3 	add	r3, r3, r3, lsr #31
+     190:	e1b010c3 	asrs	r1, r3, #1
+     194:	1a000001 	bne	1a0 <register_tm_clones+0x28>
+     198:	e8bd4008 	pop	{r3, lr}
+     19c:	e12fff1e 	bx	lr
+     1a0:	e59f2018 	ldr	r2, [pc, #24]	; 1c0 <register_tm_clones+0x48>
+     1a4:	e3520000 	cmp	r2, #0
+     1a8:	0afffffa 	beq	198 <register_tm_clones+0x20>
+     1ac:	e1a0e00f 	mov	lr, pc
+     1b0:	e12fff12 	bx	r2
+     1b4:	eafffff7 	b	198 <register_tm_clones+0x20>
+     1b8:	0001b6a0 	.word	0x0001b6a0
+     1bc:	0001b6a0 	.word	0x0001b6a0
+     1c0:	00000000 	.word	0x00000000
+
+000001c4 <__do_global_dtors_aux>:
+     1c4:	e92d4010 	push	{r4, lr}
+     1c8:	e59f402c 	ldr	r4, [pc, #44]	; 1fc <__do_global_dtors_aux+0x38>
+     1cc:	e5d43000 	ldrb	r3, [r4]
+     1d0:	e3530000 	cmp	r3, #0
+     1d4:	1a000006 	bne	1f4 <__do_global_dtors_aux+0x30>
+     1d8:	ebffffd5 	bl	134 <deregister_tm_clones>
+     1dc:	e59f301c 	ldr	r3, [pc, #28]	; 200 <__do_global_dtors_aux+0x3c>
+     1e0:	e3530000 	cmp	r3, #0
+     1e4:	159f0018 	ldrne	r0, [pc, #24]	; 204 <__do_global_dtors_aux+0x40>
+     1e8:	1320f000 	nopne	{0}
+     1ec:	e3a03001 	mov	r3, #1
+     1f0:	e5c43000 	strb	r3, [r4]
+     1f4:	e8bd4010 	pop	{r4, lr}
+     1f8:	e12fff1e 	bx	lr
+     1fc:	0001b6a0 	.word	0x0001b6a0
+     200:	00000000 	.word	0x00000000
+     204:	0000141c 	.word	0x0000141c
+
+00000208 <frame_dummy>:
+     208:	e92d4008 	push	{r3, lr}
+     20c:	e59f3034 	ldr	r3, [pc, #52]	; 248 <frame_dummy+0x40>
+     210:	e3530000 	cmp	r3, #0
+     214:	159f0030 	ldrne	r0, [pc, #48]	; 24c <frame_dummy+0x44>
+     218:	159f1030 	ldrne	r1, [pc, #48]	; 250 <frame_dummy+0x48>
+     21c:	1320f000 	nopne	{0}
+     220:	e59f002c 	ldr	r0, [pc, #44]	; 254 <frame_dummy+0x4c>
+     224:	e5903000 	ldr	r3, [r0]
+     228:	e3530000 	cmp	r3, #0
+     22c:	0a000003 	beq	240 <frame_dummy+0x38>
+     230:	e59f3020 	ldr	r3, [pc, #32]	; 258 <frame_dummy+0x50>
+     234:	e3530000 	cmp	r3, #0
+     238:	11a0e00f 	movne	lr, pc
+     23c:	112fff13 	bxne	r3
+     240:	e8bd4008 	pop	{r3, lr}
+     244:	eaffffcb 	b	178 <register_tm_clones>
+     248:	00000000 	.word	0x00000000
+     24c:	0000141c 	.word	0x0000141c
+     250:	0001b6a4 	.word	0x0001b6a4
+     254:	00001478 	.word	0x00001478
+     258:	00000000 	.word	0x00000000
+
+0000025c <swap>:
+        pixel_buffer_start = *(pixel_ctrl_ptr + 1);
+	}
+}
+
+void swap(int* x, int* y) {
+    int temp = *x;
+     25c:	e5903000 	ldr	r3, [r0]
+    *x = *y;
+     260:	e5912000 	ldr	r2, [r1]
+     264:	e5802000 	str	r2, [r0]
+    *y = temp;
+     268:	e5813000 	str	r3, [r1]
+     26c:	e12fff1e 	bx	lr
+
+00000270 <plot_pixel>:
+}
+    
+void plot_pixel(int x, int y, short line_color)
+{
+    *(short int *)(pixel_buffer_start + (y << 10) + (x << 1)) = line_color;
+     270:	e30b36bc 	movw	r3, #46780	; 0xb6bc
+     274:	e3403001 	movt	r3, #1
+     278:	e5933000 	ldr	r3, [r3]
+     27c:	e1a00080 	lsl	r0, r0, #1
+     280:	e0831501 	add	r1, r3, r1, lsl #10
+     284:	e18120b0 	strh	r2, [r1, r0]
+     288:	e12fff1e 	bx	lr
+
+0000028c <clear_screen>:
+}
+
+void clear_screen() {
+     28c:	e92d40f8 	push	{r3, r4, r5, r6, r7, lr}
+     290:	e3a05000 	mov	r5, #0
+     294:	e1a07005 	mov	r7, r5
+    for (unsigned short x = 0; x < MAX_X; x++) {
+        for (unsigned short y = 0; y < MAX_Y; y++) {
+            plot_pixel(x, y, 0xFFFF);    // this is white
+     298:	e3e06000 	mvn	r6, #0
+     29c:	ea000009 	b	2c8 <clear_screen+0x3c>
+     2a0:	e1a00005 	mov	r0, r5
+     2a4:	e1a01004 	mov	r1, r4
+     2a8:	e1a02006 	mov	r2, r6
+     2ac:	ebffffef 	bl	270 <plot_pixel>
+     2b0:	e2844001 	add	r4, r4, #1
+    *(short int *)(pixel_buffer_start + (y << 10) + (x << 1)) = line_color;
+}
+
+void clear_screen() {
+    for (unsigned short x = 0; x < MAX_X; x++) {
+        for (unsigned short y = 0; y < MAX_Y; y++) {
+     2b4:	e35400f0 	cmp	r4, #240	; 0xf0
+     2b8:	1afffff8 	bne	2a0 <clear_screen+0x14>
+     2bc:	e2855001 	add	r5, r5, #1
+{
+    *(short int *)(pixel_buffer_start + (y << 10) + (x << 1)) = line_color;
+}
+
+void clear_screen() {
+    for (unsigned short x = 0; x < MAX_X; x++) {
+     2c0:	e3550d05 	cmp	r5, #320	; 0x140
+     2c4:	08bd80f8 	popeq	{r3, r4, r5, r6, r7, pc}
+void plot_pixel(int x, int y, short line_color)
+{
+    *(short int *)(pixel_buffer_start + (y << 10) + (x << 1)) = line_color;
+}
+
+void clear_screen() {
+     2c8:	e1a04007 	mov	r4, r7
+     2cc:	eafffff3 	b	2a0 <clear_screen+0x14>
+
+000002d0 <draw_line>:
+    }
+}
+
+
+
+void draw_line(int x0, int y0, int x1, int y1, short color) {
+     2d0:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+     2d4:	e24dd014 	sub	sp, sp, #20
+     2d8:	e58d000c 	str	r0, [sp, #12]
+     2dc:	e58d1008 	str	r1, [sp, #8]
+     2e0:	e58d2004 	str	r2, [sp, #4]
+     2e4:	e58d3000 	str	r3, [sp]
+     2e8:	e1dda3f8 	ldrsh	r10, [sp, #56]	; 0x38
+    bool isSteep = abs(y1 - y0) > abs (x1 - x0);
+     2ec:	e0613003 	rsb	r3, r1, r3
+     2f0:	e3530000 	cmp	r3, #0
+     2f4:	b2633000 	rsblt	r3, r3, #0
+     2f8:	e0602002 	rsb	r2, r0, r2
+     2fc:	e0227fc2 	eor	r7, r2, r2, asr #31
+     300:	e0477fc2 	sub	r7, r7, r2, asr #31
+     304:	e1530007 	cmp	r3, r7
+     308:	d3a07000 	movle	r7, #0
+     30c:	c3a07001 	movgt	r7, #1
+    
+    if (isSteep) {        // Inverses the slope to make the for loop below work
+     310:	e3570000 	cmp	r7, #0
+     314:	0a000005 	beq	330 <draw_line+0x60>
+        swap(&x0, &y0);
+     318:	e28d000c 	add	r0, sp, #12
+     31c:	e28d1008 	add	r1, sp, #8
+     320:	ebffffcd 	bl	25c <swap>
+        swap(&x1, &y1);
+     324:	e28d0004 	add	r0, sp, #4
+     328:	e1a0100d 	mov	r1, sp
+     32c:	ebffffca 	bl	25c <swap>
+    }
+    if (x0 > x1) {        // Reverses order if x0 is ahead of x1 (backwards line)
+     330:	e59d3004 	ldr	r3, [sp, #4]
+     334:	e59d200c 	ldr	r2, [sp, #12]
+     338:	e1520003 	cmp	r2, r3
+     33c:	da000005 	ble	358 <draw_line+0x88>
+        swap(&x0, &x1);
+     340:	e28d000c 	add	r0, sp, #12
+     344:	e28d1004 	add	r1, sp, #4
+     348:	ebffffc3 	bl	25c <swap>
+        swap(&y0, &y1);
+     34c:	e28d0008 	add	r0, sp, #8
+     350:	e1a0100d 	mov	r1, sp
+     354:	ebffffc0 	bl	25c <swap>
+    }
+    
+    short deltaX = x1 - x0;
+     358:	e59d2004 	ldr	r2, [sp, #4]
+     35c:	e59d500c 	ldr	r5, [sp, #12]
+     360:	e0659002 	rsb	r9, r5, r2
+     364:	e6ff9079 	uxth	r9, r9
+    short deltaY = abs(y1 - y0);
+     368:	e59d1000 	ldr	r1, [sp]
+     36c:	e59d3008 	ldr	r3, [sp, #8]
+     370:	e0638001 	rsb	r8, r3, r1
+     374:	e3580000 	cmp	r8, #0
+     378:	b2688000 	rsblt	r8, r8, #0
+    short error = -(deltaX)/2;
+     37c:	e6bf4079 	sxth	r4, r9
+     380:	e2644000 	rsb	r4, r4, #0
+     384:	e0844fa4 	add	r4, r4, r4, lsr #31
+     388:	e7ef40d4 	ubfx	r4, r4, #1, #16
+    short y = y0;
+     38c:	e6ff6073 	uxth	r6, r3
+    short yStep = -1;    // By default, assuming the line goes upwards (from left to right)
+     390:	e30fbfff 	movw	r11, #65535	; 0xffff
+     394:	e1510003 	cmp	r1, r3
+     398:	c3a0b001 	movgt	r11, #1
+    
+    if (y0 < y1)        // If the line goes downwards,
+        yStep = 1;        // Go down the screen instead of up the screen
+    
+    for (short x = x0; x <= x1; x++) {
+     39c:	e6ff5075 	uxth	r5, r5
+     3a0:	e6bf1075 	sxth	r1, r5
+     3a4:	e1520001 	cmp	r2, r1
+     3a8:	ba000013 	blt	3fc <draw_line+0x12c>
+        if (isSteep)
+     3ac:	e3570000 	cmp	r7, #0
+            plot_pixel(y, x, color);        // Changed x and y, because we swapped it earlier.
+     3b0:	16bf0076 	sxthne	r0, r6
+        else
+            plot_pixel(x, y, color);
+     3b4:	01a00001 	moveq	r0, r1
+     3b8:	06bf1076 	sxtheq	r1, r6
+     3bc:	e1a0200a 	mov	r2, r10
+     3c0:	ebffffaa 	bl	270 <plot_pixel>
+        
+        error = error + deltaY;
+     3c4:	e0884004 	add	r4, r8, r4
+     3c8:	e6ff3074 	uxth	r3, r4
+     3cc:	e6ff4073 	uxth	r4, r3
+        if (error >= 0) {
+     3d0:	e3140902 	tst	r4, #32768	; 0x8000
+            y += yStep;
+     3d4:	0086600b 	addeq	r6, r6, r11
+     3d8:	06ff6076 	uxtheq	r6, r6
+            error -= deltaX;
+     3dc:	00694003 	rsbeq	r4, r9, r3
+     3e0:	06ff4074 	uxtheq	r4, r4
+    short yStep = -1;    // By default, assuming the line goes upwards (from left to right)
+    
+    if (y0 < y1)        // If the line goes downwards,
+        yStep = 1;        // Go down the screen instead of up the screen
+    
+    for (short x = x0; x <= x1; x++) {
+     3e4:	e2855001 	add	r5, r5, #1
+     3e8:	e6ff5075 	uxth	r5, r5
+     3ec:	e6bf1075 	sxth	r1, r5
+     3f0:	e59d3004 	ldr	r3, [sp, #4]
+     3f4:	e1510003 	cmp	r1, r3
+     3f8:	daffffeb 	ble	3ac <draw_line+0xdc>
+        if (error >= 0) {
+            y += yStep;
+            error -= deltaX;
+        }
+    }
+}
+     3fc:	e28dd014 	add	sp, sp, #20
+     400:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, r10, r11, pc}
+
+00000404 <draw_box>:
+
+void draw_box(int x, int y, short color) {
+     404:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, r10, lr}
+     408:	e1a09000 	mov	r9, r0
+     40c:	e1a08001 	mov	r8, r1
+     410:	e1a07002 	mov	r7, r2
+     414:	e3a06000 	mov	r6, #0
+     418:	e1a0a006 	mov	r10, r6
+     41c:	ea000009 	b	448 <draw_box+0x44>
+    for (unsigned short i = 0; i < 4; i++) {
+        for (unsigned short j = 0; j < 4; j++)
+            plot_pixel(x + i, y + j, color);
+     420:	e1a00005 	mov	r0, r5
+     424:	e0841008 	add	r1, r4, r8
+     428:	e1a02007 	mov	r2, r7
+     42c:	ebffff8f 	bl	270 <plot_pixel>
+     430:	e2844001 	add	r4, r4, #1
+    }
+}
+
+void draw_box(int x, int y, short color) {
+    for (unsigned short i = 0; i < 4; i++) {
+        for (unsigned short j = 0; j < 4; j++)
+     434:	e3540004 	cmp	r4, #4
+     438:	1afffff8 	bne	420 <draw_box+0x1c>
+     43c:	e2866001 	add	r6, r6, #1
+        }
+    }
+}
+
+void draw_box(int x, int y, short color) {
+    for (unsigned short i = 0; i < 4; i++) {
+     440:	e3560004 	cmp	r6, #4
+     444:	08bd87f0 	popeq	{r4, r5, r6, r7, r8, r9, r10, pc}
+            error -= deltaX;
+        }
+    }
+}
+
+void draw_box(int x, int y, short color) {
+     448:	e1a0400a 	mov	r4, r10
+     44c:	e0865009 	add	r5, r6, r9
+     450:	eafffff2 	b	420 <draw_box+0x1c>
+
+00000454 <draw_controlled_cell>:
+        for (unsigned short j = 0; j < 4; j++)
+            plot_pixel(x + i, y + j, color);
+    }
+}
+
+void draw_controlled_cell(int x, int y, short line_color) {
+     454:	e92d45f8 	push	{r3, r4, r5, r6, r7, r8, r10, lr}
+     458:	e1a07001 	mov	r7, r1
+     45c:	e1a06002 	mov	r6, r2
+     460:	e1a05000 	mov	r5, r0
+     464:	e3a0800a 	mov	r8, #10
+     468:	e3a0a000 	mov	r10, #0
+     46c:	ea00000b 	b	4a0 <draw_controlled_cell+0x4c>
+    for (unsigned short i = 0; i < 10; i++) {
+        for (unsigned short j = 0; j < 10; j++)
+            plot_pixel(x + i, y + j, line_color);//0xF000
+     470:	e1a00005 	mov	r0, r5
+     474:	e0841007 	add	r1, r4, r7
+     478:	e1a02006 	mov	r2, r6
+     47c:	ebffff7b 	bl	270 <plot_pixel>
+     480:	e2844001 	add	r4, r4, #1
+    }
+}
+
+void draw_controlled_cell(int x, int y, short line_color) {
+    for (unsigned short i = 0; i < 10; i++) {
+        for (unsigned short j = 0; j < 10; j++)
+     484:	e354000a 	cmp	r4, #10
+     488:	1afffff8 	bne	470 <draw_controlled_cell+0x1c>
+     48c:	e2488001 	sub	r8, r8, #1
+     490:	e6ff8078 	uxth	r8, r8
+     494:	e2855001 	add	r5, r5, #1
+            plot_pixel(x + i, y + j, color);
+    }
+}
+
+void draw_controlled_cell(int x, int y, short line_color) {
+    for (unsigned short i = 0; i < 10; i++) {
+     498:	e3580000 	cmp	r8, #0
+     49c:	08bd85f8 	popeq	{r3, r4, r5, r6, r7, r8, r10, pc}
+        for (unsigned short j = 0; j < 4; j++)
+            plot_pixel(x + i, y + j, color);
+    }
+}
+
+void draw_controlled_cell(int x, int y, short line_color) {
+     4a0:	e1a0400a 	mov	r4, r10
+     4a4:	eafffff1 	b	470 <draw_controlled_cell+0x1c>
+
+000004a8 <waitForVSync>:
+
+void waitForVSync() {
+    volatile int* pixel_ctrl_ptr = (int *) 0xFF203020;    //pixel controller
+    register int status;
+    
+    *pixel_ctrl_ptr = 1;    //start the synchronization procress
+     4a8:	e3033fff 	movw	r3, #16383	; 0x3fff
+     4ac:	e34f3f20 	movt	r3, #65312	; 0xff20
+     4b0:	e3a02001 	mov	r2, #1
+     4b4:	e5032fdf 	str	r2, [r3, #-4063]	; 0xfffff021
+    
+    status = *(pixel_ctrl_ptr + 3);
+     4b8:	e5133fd3 	ldr	r3, [r3, #-4051]	; 0xfffff02d
+    
+    while ((status & 0x01) != 0) {
+     4bc:	e3130001 	tst	r3, #1
+     4c0:	012fff1e 	bxeq	lr
+        status = *(pixel_ctrl_ptr + 3);
+     4c4:	e3032fff 	movw	r2, #16383	; 0x3fff
+     4c8:	e34f2f20 	movt	r2, #65312	; 0xff20
+     4cc:	e5123fd3 	ldr	r3, [r2, #-4051]	; 0xfffff02d
+    
+    *pixel_ctrl_ptr = 1;    //start the synchronization procress
+    
+    status = *(pixel_ctrl_ptr + 3);
+    
+    while ((status & 0x01) != 0) {
+     4d0:	e3130001 	tst	r3, #1
+     4d4:	1afffffc 	bne	4cc <waitForVSync+0x24>
+     4d8:	e12fff1e 	bx	lr
+
+000004dc <faster_clear_screen>:
+        status = *(pixel_ctrl_ptr + 3);
+    }
+}
+
+//faster clear screen
+void faster_clear_screen(int x, int y) {// realized that this function should only be implemented in the end
+     4dc:	e92d45f8 	push	{r3, r4, r5, r6, r7, r8, r10, lr}
+     4e0:	e1a07000 	mov	r7, r0
+     4e4:	e1a05001 	mov	r5, r1
+     4e8:	e3a08044 	mov	r8, #68	; 0x44
+     4ec:	e3a0a000 	mov	r10, #0
+   // }
+	
+	for (unsigned short i = 0; i < 68; i++) {
+		int k = 0;
+    	for (unsigned short j = 0; j < (160); (j= j+2 )){
+    		plot_pixel(x +k , y + i, 0xFFFF );//0xF000
+     4f0:	e3e06000 	mvn	r6, #0
+     4f4:	ea00000b 	b	528 <faster_clear_screen+0x4c>
+     4f8:	e0840007 	add	r0, r4, r7
+     4fc:	e1a01005 	mov	r1, r5
+     500:	e1a02006 	mov	r2, r6
+     504:	ebffff59 	bl	270 <plot_pixel>
+			k++;
+     508:	e2844001 	add	r4, r4, #1
+   //     }
+   // }
+	
+	for (unsigned short i = 0; i < 68; i++) {
+		int k = 0;
+    	for (unsigned short j = 0; j < (160); (j= j+2 )){
+     50c:	e3540050 	cmp	r4, #80	; 0x50
+     510:	1afffff8 	bne	4f8 <faster_clear_screen+0x1c>
+     514:	e2488001 	sub	r8, r8, #1
+     518:	e6ff8078 	uxth	r8, r8
+     51c:	e2855001 	add	r5, r5, #1
+   //     for (unsigned short y = 0; y < MAX_Y; y++) {
+   //         plot_pixel(x, y, 0xFFFF);    // this is white
+   //     }
+   // }
+	
+	for (unsigned short i = 0; i < 68; i++) {
+     520:	e3580000 	cmp	r8, #0
+     524:	08bd85f8 	popeq	{r3, r4, r5, r6, r7, r8, r10, pc}
+        status = *(pixel_ctrl_ptr + 3);
+    }
+}
+
+//faster clear screen
+void faster_clear_screen(int x, int y) {// realized that this function should only be implemented in the end
+     528:	e1a0400a 	mov	r4, r10
+     52c:	eafffff1 	b	4f8 <faster_clear_screen+0x1c>
+
+00000530 <draw_controlled_akame>:
+ //           plot_pixel(x + i, y + j, image[i][j]);//0xF000
+ //   }
+//}
+
+//trying draw the akame [68][160]
+void draw_controlled_akame(int x, int y) {
+     530:	e92d4ff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, lr}
+     534:	e1a0b000 	mov	r11, r0
+     538:	e1a09001 	mov	r9, r1
+     53c:	e59f7098 	ldr	r7, [pc, #152]	; 5dc <draw_controlled_akame+0xac>
+     540:	e3a0a000 	mov	r10, #0
+     544:	e3015480 	movw	r5, #5248	; 0x1480
+     548:	e3405000 	movt	r5, #0
+     54c:	ea00001c 	b	5c4 <draw_controlled_akame+0x94>
+
+    for (unsigned short i = 0; i < 68; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (160); (j= j+2 )){
+			
+			if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[0][0+1]<< 8) + akame[0][0]  ){
+     550:	e5940000 	ldr	r0, [r4]
+     554:	e5141004 	ldr	r1, [r4, #-4]
+     558:	e0813400 	add	r3, r1, r0, lsl #8
+     55c:	e5952004 	ldr	r2, [r5, #4]
+     560:	e595c000 	ldr	r12, [r5]
+     564:	e08cc402 	add	r12, r12, r2, lsl #8
+     568:	e153000c 	cmp	r3, r12
+     56c:	0a00000c 	beq	5a4 <draw_controlled_akame+0x74>
+			
+			}else{
+				if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[0][1+1]<< 8) + akame[0][1]  ){
+     570:	e595c008 	ldr	r12, [r5, #8]
+     574:	e082240c 	add	r2, r2, r12, lsl #8
+     578:	e1530002 	cmp	r3, r2
+     57c:	0a000008 	beq	5a4 <draw_controlled_akame+0x74>
+				}else{	
+					if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[3][9+1]<< 8) + akame[3][9]  ){
+     580:	e595c7a8 	ldr	r12, [r5, #1960]	; 0x7a8
+     584:	e59527a4 	ldr	r2, [r5, #1956]	; 0x7a4
+     588:	e082240c 	add	r2, r2, r12, lsl #8
+     58c:	e1530002 	cmp	r3, r2
+     590:	0a000003 	beq	5a4 <draw_controlled_akame+0x74>
+					}else{	
+            		plot_pixel(x +k , y + i, (akame[i][j+1]<< 8) + akame[i][j]   );//0xF000
+     594:	e1a00006 	mov	r0, r6
+     598:	e1a01008 	mov	r1, r8
+     59c:	e6bf2073 	sxth	r2, r3
+     5a0:	ebffff32 	bl	270 <plot_pixel>
+     5a4:	e2844008 	add	r4, r4, #8
+     5a8:	e2866001 	add	r6, r6, #1
+//trying draw the akame [68][160]
+void draw_controlled_akame(int x, int y) {
+
+    for (unsigned short i = 0; i < 68; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (160); (j= j+2 )){
+     5ac:	e1540007 	cmp	r4, r7
+     5b0:	1affffe6 	bne	550 <draw_controlled_akame+0x20>
+     5b4:	e28aa001 	add	r10, r10, #1
+     5b8:	e2877d0a 	add	r7, r7, #640	; 0x280
+//}
+
+//trying draw the akame [68][160]
+void draw_controlled_akame(int x, int y) {
+
+    for (unsigned short i = 0; i < 68; i++) {
+     5bc:	e35a0044 	cmp	r10, #68	; 0x44
+     5c0:	08bd8ff8 	popeq	{r3, r4, r5, r6, r7, r8, r9, r10, r11, pc}
+ //           plot_pixel(x + i, y + j, image[i][j]);//0xF000
+ //   }
+//}
+
+//trying draw the akame [68][160]
+void draw_controlled_akame(int x, int y) {
+     5c4:	e08a410a 	add	r4, r10, r10, lsl #2
+     5c8:	e0854384 	add	r4, r5, r4, lsl #7
+     5cc:	e2844004 	add	r4, r4, #4
+     5d0:	e1a0600b 	mov	r6, r11
+     5d4:	e08a8009 	add	r8, r10, r9
+     5d8:	eaffffdc 	b	550 <draw_controlled_akame+0x20>
+     5dc:	00001704 	.word	0x00001704
+
+000005e0 <draw_controlled_esdeath>:
+		}
+    }
+}
+
+//esdeath [37][80]=
+void draw_controlled_esdeath(int x, int y) {
+     5e0:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+     5e4:	e24dd00c 	sub	sp, sp, #12
+     5e8:	e1a0b000 	mov	r11, r0
+     5ec:	e58d1004 	str	r1, [sp, #4]
+     5f0:	e59f708c 	ldr	r7, [pc, #140]	; 684 <draw_controlled_esdeath+0xa4>
+     5f4:	e3a0a000 	mov	r10, #0
+     5f8:	e30b6458 	movw	r6, #46168	; 0xb458
+     5fc:	e3406000 	movt	r6, #0
+     600:	e2869ea2 	add	r9, r6, #2592	; 0xa20
+     604:	e2899008 	add	r9, r9, #8
+     608:	ea000014 	b	660 <draw_controlled_esdeath+0x80>
+
+    for (unsigned short i = 0; i < 37; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (80); (j= j+2 )){
+			if((((esdeath[i][j+1])<< 8) + ((esdeath[i][j]) ) ) == ((esdeath[0][0+1]<< 8) + esdeath[0][0]) ){
+     60c:	e5942000 	ldr	r2, [r4]
+     610:	e5143004 	ldr	r3, [r4, #-4]
+     614:	e0830402 	add	r0, r3, r2, lsl #8
+     618:	e596ca2c 	ldr	r12, [r6, #2604]	; 0xa2c
+     61c:	e5961a28 	ldr	r1, [r6, #2600]	; 0xa28
+     620:	e081140c 	add	r1, r1, r12, lsl #8
+     624:	e1500001 	cmp	r0, r1
+     628:	0a000004 	beq	640 <draw_controlled_esdeath+0x60>
+				
+			}else{
+			
+            plot_pixel(x +k , y + i, (((esdeath[i][j+1])<< 8) + ((esdeath[i][j]) ) ) );//0xF000
+     62c:	e1a02000 	mov	r2, r0
+     630:	e1a00005 	mov	r0, r5
+     634:	e1a01008 	mov	r1, r8
+     638:	e6bf2072 	sxth	r2, r2
+     63c:	ebffff0b 	bl	270 <plot_pixel>
+     640:	e2844008 	add	r4, r4, #8
+     644:	e2855001 	add	r5, r5, #1
+//esdeath [37][80]=
+void draw_controlled_esdeath(int x, int y) {
+
+    for (unsigned short i = 0; i < 37; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (80); (j= j+2 )){
+     648:	e1540007 	cmp	r4, r7
+     64c:	1affffee 	bne	60c <draw_controlled_esdeath+0x2c>
+     650:	e28aa001 	add	r10, r10, #1
+     654:	e2877d05 	add	r7, r7, #320	; 0x140
+}
+
+//esdeath [37][80]=
+void draw_controlled_esdeath(int x, int y) {
+
+    for (unsigned short i = 0; i < 37; i++) {
+     658:	e35a0025 	cmp	r10, #37	; 0x25
+     65c:	0a000006 	beq	67c <draw_controlled_esdeath+0x9c>
+		}
+    }
+}
+
+//esdeath [37][80]=
+void draw_controlled_esdeath(int x, int y) {
+     660:	e08a410a 	add	r4, r10, r10, lsl #2
+     664:	e0894304 	add	r4, r9, r4, lsl #6
+     668:	e2844004 	add	r4, r4, #4
+     66c:	e1a0500b 	mov	r5, r11
+     670:	e59d3004 	ldr	r3, [sp, #4]
+     674:	e08a8003 	add	r8, r10, r3
+     678:	eaffffe3 	b	60c <draw_controlled_esdeath+0x2c>
+			}
+			k++;
+			//printf ((esdeath[i][j+1]<< 8) + esdeath[i][j]  );
+			}
+    }
+}
+     67c:	e28dd00c 	add	sp, sp, #12
+     680:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, r10, r11, pc}
+     684:	0000bfc4 	.word	0x0000bfc4
+
+00000688 <draw_controlled_seryu>:
+
+//seryu[46][120]
+void draw_controlled_seryu(int x, int y) {
+     688:	e92d4ff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, lr}
+     68c:	e1a0b000 	mov	r11, r0
+     690:	e1a09001 	mov	r9, r1
+     694:	e59f6068 	ldr	r6, [pc, #104]	; 704 <draw_controlled_seryu+0x7c>
+     698:	e3a08000 	mov	r8, #0
+     69c:	e246af79 	sub	r10, r6, #484	; 0x1e4
+     6a0:	ea000011 	b	6ec <draw_controlled_seryu+0x64>
+
+    for (unsigned short i = 0; i < 46; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (120); (j= j+2 )){
+			if((((seryu[i][j+1])<< 8) + ((seryu[i][j]) ) ) == 0x0000){
+     6a4:	e5942000 	ldr	r2, [r4]
+     6a8:	e5143004 	ldr	r3, [r4, #-4]
+     6ac:	e0831402 	add	r1, r3, r2, lsl #8
+     6b0:	e3510000 	cmp	r1, #0
+     6b4:	0a000004 	beq	6cc <draw_controlled_seryu+0x44>
+				//plot_pixel(x +k , y + i, 0xFFDF );	
+			}else{
+				
+            	plot_pixel(x +k , y + i, (((seryu[i][j+1])<< 8) + ((seryu[i][j]) ) ) );//0xF000
+     6b8:	e1a02001 	mov	r2, r1
+     6bc:	e1a00005 	mov	r0, r5
+     6c0:	e1a01007 	mov	r1, r7
+     6c4:	e6bf2072 	sxth	r2, r2
+     6c8:	ebfffee8 	bl	270 <plot_pixel>
+     6cc:	e2844008 	add	r4, r4, #8
+     6d0:	e2855001 	add	r5, r5, #1
+//seryu[46][120]
+void draw_controlled_seryu(int x, int y) {
+
+    for (unsigned short i = 0; i < 46; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (120); (j= j+2 )){
+     6d4:	e1540006 	cmp	r4, r6
+     6d8:	1afffff1 	bne	6a4 <draw_controlled_seryu+0x1c>
+     6dc:	e2888001 	add	r8, r8, #1
+     6e0:	e2866e1e 	add	r6, r6, #480	; 0x1e0
+}
+
+//seryu[46][120]
+void draw_controlled_seryu(int x, int y) {
+
+    for (unsigned short i = 0; i < 46; i++) {
+     6e4:	e358002e 	cmp	r8, #46	; 0x2e
+     6e8:	08bd8ff8 	popeq	{r3, r4, r5, r6, r7, r8, r9, r10, r11, pc}
+			}
+    }
+}
+
+//seryu[46][120]
+void draw_controlled_seryu(int x, int y) {
+     6ec:	e0684208 	rsb	r4, r8, r8, lsl #4
+     6f0:	e08a4284 	add	r4, r10, r4, lsl #5
+     6f4:	e2844004 	add	r4, r4, #4
+     6f8:	e1a0500b 	mov	r5, r11
+     6fc:	e0887009 	add	r7, r8, r9
+     700:	eaffffe7 	b	6a4 <draw_controlled_seryu+0x1c>
+     704:	0000eea4 	.word	0x0000eea4
+
+00000708 <draw_controlled_kurame>:
+			}
+    }
+}
+
+//kurame[58][120]
+void draw_controlled_kurame(int x, int y) {
+     708:	e92d4ff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, lr}
+     70c:	e1a0b000 	mov	r11, r0
+     710:	e1a09001 	mov	r9, r1
+     714:	e59f606c 	ldr	r6, [pc, #108]	; 788 <draw_controlled_kurame+0x80>
+     718:	e3a0a000 	mov	r10, #0
+
+    for (unsigned short i = 0; i < 58; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (120); (j= j+2 )){
+			if((((kurame[i][j+1])<< 8) + ((kurame[i][j]) ) ) == 0xffff){
+     71c:	e30f7fff 	movw	r7, #65535	; 0xffff
+     720:	ea000011 	b	76c <draw_controlled_kurame+0x64>
+     724:	e5942000 	ldr	r2, [r4]
+     728:	e5143004 	ldr	r3, [r4, #-4]
+     72c:	e0831402 	add	r1, r3, r2, lsl #8
+     730:	e1510007 	cmp	r1, r7
+     734:	0a000004 	beq	74c <draw_controlled_kurame+0x44>
+				//plot_pixel(x +k , y + i, 0xFFDF );	
+			}else{
+				
+            	plot_pixel(x +k , y + i, (((kurame[i][j+1])<< 8) + ((kurame[i][j]) ) ) );//0xF000
+     738:	e1a02001 	mov	r2, r1
+     73c:	e1a00005 	mov	r0, r5
+     740:	e1a01008 	mov	r1, r8
+     744:	e6bf2072 	sxth	r2, r2
+     748:	ebfffec8 	bl	270 <plot_pixel>
+     74c:	e2844008 	add	r4, r4, #8
+     750:	e2855001 	add	r5, r5, #1
+//kurame[58][120]
+void draw_controlled_kurame(int x, int y) {
+
+    for (unsigned short i = 0; i < 58; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (120); (j= j+2 )){
+     754:	e1540006 	cmp	r4, r6
+     758:	1afffff1 	bne	724 <draw_controlled_kurame+0x1c>
+     75c:	e28aa001 	add	r10, r10, #1
+     760:	e2866e1e 	add	r6, r6, #480	; 0x1e0
+}
+
+//kurame[58][120]
+void draw_controlled_kurame(int x, int y) {
+
+    for (unsigned short i = 0; i < 58; i++) {
+     764:	e35a003a 	cmp	r10, #58	; 0x3a
+     768:	08bd8ff8 	popeq	{r3, r4, r5, r6, r7, r8, r9, r10, r11, pc}
+			}
+    }
+}
+
+//kurame[58][120]
+void draw_controlled_kurame(int x, int y) {
+     76c:	e06a420a 	rsb	r4, r10, r10, lsl #4
+     770:	e59f3014 	ldr	r3, [pc, #20]	; 78c <draw_controlled_kurame+0x84>
+     774:	e0834284 	add	r4, r3, r4, lsl #5
+     778:	e2844004 	add	r4, r4, #4
+     77c:	e1a0500b 	mov	r5, r11
+     780:	e08a8009 	add	r8, r10, r9
+     784:	eaffffe6 	b	724 <draw_controlled_kurame+0x1c>
+     788:	000144e4 	.word	0x000144e4
+     78c:	00014300 	.word	0x00014300
+
+00000790 <draw_controlled_image>:
+		}
+    }
+}
+
+
+void draw_controlled_image(int x, int y) {
+     790:	e92d4ff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, lr}
+     794:	e1a0b000 	mov	r11, r0
+     798:	e1a09001 	mov	r9, r1
+     79c:	e59f6050 	ldr	r6, [pc, #80]	; 7f4 <draw_controlled_image+0x64>
+     7a0:	e3a08000 	mov	r8, #0
+     7a4:	e246a030 	sub	r10, r6, #48	; 0x30
+     7a8:	ea00000b 	b	7dc <draw_controlled_image+0x4c>
+    for (unsigned short i = 0; i < 13; i++) {
+        for (unsigned short j = 0; j < 13; j++)
+            plot_pixel(x + j, y + i, virus[i][j]);//0xF000
+     7ac:	e5b52004 	ldr	r2, [r5, #4]!
+     7b0:	e1a00004 	mov	r0, r4
+     7b4:	e1a01007 	mov	r1, r7
+     7b8:	e6bf2072 	sxth	r2, r2
+     7bc:	ebfffeab 	bl	270 <plot_pixel>
+     7c0:	e2844001 	add	r4, r4, #1
+}
+
+
+void draw_controlled_image(int x, int y) {
+    for (unsigned short i = 0; i < 13; i++) {
+        for (unsigned short j = 0; j < 13; j++)
+     7c4:	e1560005 	cmp	r6, r5
+     7c8:	1afffff7 	bne	7ac <draw_controlled_image+0x1c>
+     7cc:	e2888001 	add	r8, r8, #1
+     7d0:	e2866034 	add	r6, r6, #52	; 0x34
+    }
+}
+
+
+void draw_controlled_image(int x, int y) {
+    for (unsigned short i = 0; i < 13; i++) {
+     7d4:	e358000d 	cmp	r8, #13
+     7d8:	08bd8ff8 	popeq	{r3, r4, r5, r6, r7, r8, r9, r10, r11, pc}
+		}
+    }
+}
+
+
+void draw_controlled_image(int x, int y) {
+     7dc:	e3a03034 	mov	r3, #52	; 0x34
+     7e0:	e025a893 	mla	r5, r3, r8, r10
+     7e4:	e2455004 	sub	r5, r5, #4
+     7e8:	e1a0400b 	mov	r4, r11
+     7ec:	e0887009 	add	r7, r8, r9
+     7f0:	eaffffed 	b	7ac <draw_controlled_image+0x1c>
+     7f4:	0001aff0 	.word	0x0001aff0
+
+000007f8 <draw_controlled_grid>:
+            plot_pixel(x + j, y + i, virus[i][j]);//0xF000
+    }
+}
+
+//draw_controlled_cell
+void draw_controlled_grid(int x, int y) {
+     7f8:	e92d4070 	push	{r4, r5, r6, lr}
+     7fc:	e1a06000 	mov	r6, r0
+     800:	e1a04001 	mov	r4, r1
+
+	draw_controlled_cell(x,y, 0x04DF);//0x04DF
+     804:	e30024df 	movw	r2, #1247	; 0x4df
+     808:	ebffff11 	bl	454 <draw_controlled_cell>
+	draw_controlled_cell(x+10,y, 0xffff);
+     80c:	e286500a 	add	r5, r6, #10
+     810:	e1a00005 	mov	r0, r5
+     814:	e1a01004 	mov	r1, r4
+     818:	e3e02000 	mvn	r2, #0
+     81c:	ebffff0c 	bl	454 <draw_controlled_cell>
+	draw_controlled_cell(x,y+10, 0xffff);
+     820:	e284400a 	add	r4, r4, #10
+     824:	e1a00006 	mov	r0, r6
+     828:	e1a01004 	mov	r1, r4
+     82c:	e3e02000 	mvn	r2, #0
+     830:	ebffff07 	bl	454 <draw_controlled_cell>
+	draw_controlled_cell(x+10,y+10, 0x04DF);
+     834:	e1a00005 	mov	r0, r5
+     838:	e1a01004 	mov	r1, r4
+     83c:	e30024df 	movw	r2, #1247	; 0x4df
+     840:	ebffff03 	bl	454 <draw_controlled_cell>
+     844:	e8bd8070 	pop	{r4, r5, r6, pc}
+
+00000848 <new_clear_screen>:
+}
+
+void new_clear_screen() {
+     848:	e92d4070 	push	{r4, r5, r6, lr}
+     84c:	e3a05000 	mov	r5, #0
+     850:	e1a06005 	mov	r6, r5
+     854:	ea000008 	b	87c <new_clear_screen+0x34>
+    for (unsigned short x = 0; x < MAX_X; x= x +20) {
+        for (unsigned short y = 0; y < MAX_Y; y = y +20) {
+            //plot_pixel(x, y, 0xFFFF);    // this is white
+			draw_controlled_grid( x, y);
+     858:	e1a00005 	mov	r0, r5
+     85c:	e1a01004 	mov	r1, r4
+     860:	ebffffe4 	bl	7f8 <draw_controlled_grid>
+     864:	e2844014 	add	r4, r4, #20
+	draw_controlled_cell(x+10,y+10, 0x04DF);
+}
+
+void new_clear_screen() {
+    for (unsigned short x = 0; x < MAX_X; x= x +20) {
+        for (unsigned short y = 0; y < MAX_Y; y = y +20) {
+     868:	e35400f0 	cmp	r4, #240	; 0xf0
+     86c:	1afffff9 	bne	858 <new_clear_screen+0x10>
+     870:	e2855014 	add	r5, r5, #20
+	draw_controlled_cell(x,y+10, 0xffff);
+	draw_controlled_cell(x+10,y+10, 0x04DF);
+}
+
+void new_clear_screen() {
+    for (unsigned short x = 0; x < MAX_X; x= x +20) {
+     874:	e3550d05 	cmp	r5, #320	; 0x140
+     878:	08bd8070 	popeq	{r4, r5, r6, pc}
+	draw_controlled_cell(x+10,y, 0xffff);
+	draw_controlled_cell(x,y+10, 0xffff);
+	draw_controlled_cell(x+10,y+10, 0x04DF);
+}
+
+void new_clear_screen() {
+     87c:	e1a04006 	mov	r4, r6
+     880:	eafffff4 	b	858 <new_clear_screen+0x10>
+
+00000884 <main>:
+
+volatile int* key_address = (int *)KEY_BASE;// we can extract the data for whether pressed or not by look at the value at this address
+// int check_key_press = *key_address;
+
+int main(void)
+{
+     884:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+     888:	e24dd084 	sub	sp, sp, #132	; 0x84
+    short color_box[MAX_RECTANGLES],
+        dx_box[MAX_RECTANGLES],
+        dy_box[MAX_RECTANGLES],
+        x_box[MAX_RECTANGLES],
+        y_box[MAX_RECTANGLES],
+		x_esdeath = rand() % (MAX_X - 40 - AKAME_LENGTH) + AKAME_LENGTH,
+     88c:	eb0001d3 	bl	fe0 <rand>
+     890:	e308351f 	movw	r3, #34079	; 0x851f
+     894:	e34531eb 	movt	r3, #20971	; 0x51eb
+     898:	e0c31093 	smull	r1, r3, r3, r0
+     89c:	e1a02fc0 	asr	r2, r0, #31
+     8a0:	e0623343 	rsb	r3, r2, r3, asr #6
+     8a4:	e3a020c8 	mov	r2, #200	; 0xc8
+     8a8:	e0630392 	mls	r3, r2, r3, r0
+     8ac:	e2833050 	add	r3, r3, #80	; 0x50
+     8b0:	e6ffb073 	uxth	r11, r3
+		y_esdeath = rand() % (MAX_Y - 37 - AKAME_HEIGHT) + AKAME_HEIGHT,
+     8b4:	eb0001c9 	bl	fe0 <rand>
+     8b8:	e30d3649 	movw	r3, #54857	; 0xd649
+     8bc:	e34f32b9 	movt	r3, #62137	; 0xf2b9
+     8c0:	e0c32093 	smull	r2, r3, r3, r0
+     8c4:	e0832000 	add	r2, r3, r0
+     8c8:	e1a03fc0 	asr	r3, r0, #31
+     8cc:	e06333c2 	rsb	r3, r3, r2, asr #7
+     8d0:	e0833183 	add	r3, r3, r3, lsl #3
+     8d4:	e0633203 	rsb	r3, r3, r3, lsl #4
+     8d8:	e0633000 	rsb	r3, r3, r0
+     8dc:	e2833044 	add	r3, r3, #68	; 0x44
+     8e0:	e6ff3073 	uxth	r3, r3
+     8e4:	e58d3000 	str	r3, [sp]
+		dx_esdeath = (rand() % 2) * 2 - 1,
+     8e8:	eb0001bc 	bl	fe0 <rand>
+     8ec:	e0803fa0 	add	r3, r0, r0, lsr #31
+     8f0:	e2033001 	and	r3, r3, #1
+     8f4:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     8f8:	e1a03080 	lsl	r3, r0, #1
+     8fc:	e2433001 	sub	r3, r3, #1
+     900:	e6ff3073 	uxth	r3, r3
+     904:	e58d3010 	str	r3, [sp, #16]
+		dy_esdeath = (rand() % 2) * 2 - 1,
+     908:	eb0001b4 	bl	fe0 <rand>
+     90c:	e0803fa0 	add	r3, r0, r0, lsr #31
+     910:	e2033001 	and	r3, r3, #1
+     914:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     918:	e1a03080 	lsl	r3, r0, #1
+     91c:	e2433001 	sub	r3, r3, #1
+     920:	e6ff3073 	uxth	r3, r3
+     924:	e58d3014 	str	r3, [sp, #20]
+		x_seryu = rand() % (MAX_X - 60 - AKAME_LENGTH) + AKAME_LENGTH,
+     928:	eb0001ac 	bl	fe0 <rand>
+     92c:	e30630b7 	movw	r3, #24759	; 0x60b7
+     930:	e34b360b 	movt	r3, #46603	; 0xb60b
+     934:	e0c31093 	smull	r1, r3, r3, r0
+     938:	e0832000 	add	r2, r3, r0
+     93c:	e1a03fc0 	asr	r3, r0, #31
+     940:	e06333c2 	rsb	r3, r3, r2, asr #7
+     944:	e3a020b4 	mov	r2, #180	; 0xb4
+     948:	e0630392 	mls	r3, r2, r3, r0
+     94c:	e2833050 	add	r3, r3, #80	; 0x50
+     950:	e6ff3073 	uxth	r3, r3
+     954:	e58d3004 	str	r3, [sp, #4]
+		y_seryu = rand() % (MAX_Y - 46 - AKAME_HEIGHT) + AKAME_HEIGHT,
+     958:	eb0001a0 	bl	fe0 <rand>
+     95c:	e3023083 	movw	r3, #8323	; 0x2083
+     960:	e3483208 	movt	r3, #33288	; 0x8208
+     964:	e0c32093 	smull	r2, r3, r3, r0
+     968:	e0832000 	add	r2, r3, r0
+     96c:	e1a03fc0 	asr	r3, r0, #31
+     970:	e0633342 	rsb	r3, r3, r2, asr #6
+     974:	e0633303 	rsb	r3, r3, r3, lsl #6
+     978:	e0403083 	sub	r3, r0, r3, lsl #1
+     97c:	e2833044 	add	r3, r3, #68	; 0x44
+     980:	e6ff3073 	uxth	r3, r3
+     984:	e58d3008 	str	r3, [sp, #8]
+		dx_seryu = (rand() % 2) * 2 - 1,
+     988:	eb000194 	bl	fe0 <rand>
+     98c:	e0803fa0 	add	r3, r0, r0, lsr #31
+     990:	e2033001 	and	r3, r3, #1
+     994:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     998:	e1a03080 	lsl	r3, r0, #1
+     99c:	e2433001 	sub	r3, r3, #1
+     9a0:	e6ff3073 	uxth	r3, r3
+     9a4:	e58d3018 	str	r3, [sp, #24]
+		dy_seryu = (rand() % 2) * 2 - 1,
+     9a8:	eb00018c 	bl	fe0 <rand>
+     9ac:	e0803fa0 	add	r3, r0, r0, lsr #31
+     9b0:	e2033001 	and	r3, r3, #1
+     9b4:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     9b8:	e1a03080 	lsl	r3, r0, #1
+     9bc:	e2433001 	sub	r3, r3, #1
+     9c0:	e6ff3073 	uxth	r3, r3
+     9c4:	e58d301c 	str	r3, [sp, #28]
+		x_kurame = rand() % (MAX_X - 58 - AKAME_LENGTH) + AKAME_LENGTH,
+     9c8:	eb000184 	bl	fe0 <rand>
+     9cc:	e30430b5 	movw	r3, #16565	; 0x40b5
+     9d0:	e34b340b 	movt	r3, #46091	; 0xb40b
+     9d4:	e0c31093 	smull	r1, r3, r3, r0
+     9d8:	e0832000 	add	r2, r3, r0
+     9dc:	e1a03fc0 	asr	r3, r0, #31
+     9e0:	e06333c2 	rsb	r3, r3, r2, asr #7
+     9e4:	e3a020b6 	mov	r2, #182	; 0xb6
+     9e8:	e0630392 	mls	r3, r2, r3, r0
+     9ec:	e2833050 	add	r3, r3, #80	; 0x50
+     9f0:	e6ff3073 	uxth	r3, r3
+     9f4:	e58d300c 	str	r3, [sp, #12]
+		y_kurame = rand() % (MAX_Y - 60 - AKAME_HEIGHT) + AKAME_HEIGHT,
+     9f8:	eb000178 	bl	fe0 <rand>
+     9fc:	e3023493 	movw	r3, #9363	; 0x2493
+     a00:	e3493249 	movt	r3, #37449	; 0x9249
+     a04:	e0c32093 	smull	r2, r3, r3, r0
+     a08:	e0832000 	add	r2, r3, r0
+     a0c:	e1a03fc0 	asr	r3, r0, #31
+     a10:	e0633342 	rsb	r3, r3, r2, asr #6
+     a14:	e0633183 	rsb	r3, r3, r3, lsl #3
+     a18:	e0400203 	sub	r0, r0, r3, lsl #4
+     a1c:	e2809044 	add	r9, r0, #68	; 0x44
+     a20:	e6ff9079 	uxth	r9, r9
+		dx_kurame = (rand() % 2) * 2 - 1,
+     a24:	eb00016d 	bl	fe0 <rand>
+     a28:	e0803fa0 	add	r3, r0, r0, lsr #31
+     a2c:	e2033001 	and	r3, r3, #1
+     a30:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     a34:	e1a03080 	lsl	r3, r0, #1
+     a38:	e2433001 	sub	r3, r3, #1
+     a3c:	e6ff3073 	uxth	r3, r3
+     a40:	e58d3020 	str	r3, [sp, #32]
+		dy_kurame = (rand() % 2) * 2 - 1;
+     a44:	eb000165 	bl	fe0 <rand>
+     a48:	e0803fa0 	add	r3, r0, r0, lsr #31
+     a4c:	e2033001 	and	r3, r3, #1
+     a50:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     a54:	e1a03080 	lsl	r3, r0, #1
+     a58:	e2433001 	sub	r3, r3, #1
+     a5c:	e6ff3073 	uxth	r3, r3
+     a60:	e58d3024 	str	r3, [sp, #36]	; 0x24
+     a64:	e3a04000 	mov	r4, #0
+    
+    for (int i = 0; i < MAX_RECTANGLES; i++) {
+        color_box[i] = colors[rand() % 20];
+        dx_box[i] = (rand() % 2) * 2 - 1;
+        dy_box[i] = (rand() % 2) * 2 - 1;
+        x_box[i] = rand() % (MAX_X - 13 - AKAME_LENGTH) + AKAME_LENGTH;
+     a68:	e3085e19 	movw	r5, #36377	; 0x8e19
+     a6c:	e3425416 	movt	r5, #9238	; 0x2416
+     a70:	e3a070e3 	mov	r7, #227	; 0xe3
+        y_box[i] = rand() % (MAX_Y - 13 - AKAME_HEIGHT) + AKAME_HEIGHT;
+     a74:	e30d614f 	movw	r6, #53583	; 0xd14f
+     a78:	e34169c2 	movt	r6, #6594	; 0x19c2
+		y_kurame = rand() % (MAX_Y - 60 - AKAME_HEIGHT) + AKAME_HEIGHT,
+		dx_kurame = (rand() % 2) * 2 - 1,
+		dy_kurame = (rand() % 2) * 2 - 1;
+    
+    for (int i = 0; i < MAX_RECTANGLES; i++) {
+        color_box[i] = colors[rand() % 20];
+     a7c:	eb000157 	bl	fe0 <rand>
+        dx_box[i] = (rand() % 2) * 2 - 1;
+     a80:	eb000156 	bl	fe0 <rand>
+     a84:	e0803fa0 	add	r3, r0, r0, lsr #31
+     a88:	e2033001 	and	r3, r3, #1
+     a8c:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     a90:	e1a02080 	lsl	r2, r0, #1
+     a94:	e2422001 	sub	r2, r2, #1
+     a98:	e28d306c 	add	r3, sp, #108	; 0x6c
+     a9c:	e18420b3 	strh	r2, [r4, r3]
+        dy_box[i] = (rand() % 2) * 2 - 1;
+     aa0:	eb00014e 	bl	fe0 <rand>
+     aa4:	e0803fa0 	add	r3, r0, r0, lsr #31
+     aa8:	e2033001 	and	r3, r3, #1
+     aac:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     ab0:	e1a02080 	lsl	r2, r0, #1
+     ab4:	e2422001 	sub	r2, r2, #1
+     ab8:	e28d3058 	add	r3, sp, #88	; 0x58
+     abc:	e18420b3 	strh	r2, [r4, r3]
+        x_box[i] = rand() % (MAX_X - 13 - AKAME_LENGTH) + AKAME_LENGTH;
+     ac0:	eb000146 	bl	fe0 <rand>
+     ac4:	e0c23095 	smull	r3, r2, r5, r0
+     ac8:	e1a03fc0 	asr	r3, r0, #31
+     acc:	e06322c2 	rsb	r2, r3, r2, asr #5
+     ad0:	e0620297 	mls	r2, r7, r2, r0
+     ad4:	e2822050 	add	r2, r2, #80	; 0x50
+     ad8:	e28d3044 	add	r3, sp, #68	; 0x44
+     adc:	e18420b3 	strh	r2, [r4, r3]
+        y_box[i] = rand() % (MAX_Y - 13 - AKAME_HEIGHT) + AKAME_HEIGHT;
+     ae0:	eb00013e 	bl	fe0 <rand>
+     ae4:	e0c21096 	smull	r1, r2, r6, r0
+     ae8:	e1a03fc0 	asr	r3, r0, #31
+     aec:	e0633242 	rsb	r3, r3, r2, asr #4
+     af0:	e0832103 	add	r2, r3, r3, lsl #2
+     af4:	e0633282 	rsb	r3, r3, r2, lsl #5
+     af8:	e0633000 	rsb	r3, r3, r0
+     afc:	e2833044 	add	r3, r3, #68	; 0x44
+     b00:	e2840030 	add	r0, r4, #48	; 0x30
+     b04:	e1a0200d 	mov	r2, sp
+     b08:	e18030b2 	strh	r3, [r0, r2]
+     b0c:	e2844002 	add	r4, r4, #2
+		x_kurame = rand() % (MAX_X - 58 - AKAME_LENGTH) + AKAME_LENGTH,
+		y_kurame = rand() % (MAX_Y - 60 - AKAME_HEIGHT) + AKAME_HEIGHT,
+		dx_kurame = (rand() % 2) * 2 - 1,
+		dy_kurame = (rand() % 2) * 2 - 1;
+    
+    for (int i = 0; i < MAX_RECTANGLES; i++) {
+     b10:	e3540014 	cmp	r4, #20
+     b14:	1affffd8 	bne	a7c <main+0x1f8>
+        x_box[i] = rand() % (MAX_X - 13 - AKAME_LENGTH) + AKAME_LENGTH;
+        y_box[i] = rand() % (MAX_Y - 13 - AKAME_HEIGHT) + AKAME_HEIGHT;
+    }
+    
+    
+    *(pixel_ctrl_ptr + 1) = FPGA_ONCHIP_BASE;        //Set front buffer to onchip
+     b18:	e3034fff 	movw	r4, #16383	; 0x3fff
+     b1c:	e34f4f20 	movt	r4, #65312	; 0xff20
+     b20:	e3a03332 	mov	r3, #-939524096	; 0xc8000000
+     b24:	e5043fdb 	str	r3, [r4, #-4059]	; 0xfffff025
+    pixel_buffer_start = *pixel_ctrl_ptr;        // Need to take buffer value to clear screen
+     b28:	e5143fdf 	ldr	r3, [r4, #-4063]	; 0xfffff021
+     b2c:	e30b56bc 	movw	r5, #46780	; 0xb6bc
+     b30:	e3405001 	movt	r5, #1
+     b34:	e5853000 	str	r3, [r5]
+    clear_screen();                                // Empty screen here as well, it looks cleaner at start
+     b38:	ebfffdd3 	bl	28c <clear_screen>
+    //draw_background();
+	//draw_akame();
+	//draw_controlled_akame(int x, int y);
+	
+	
+	waitForVSync();
+     b3c:	ebfffe59 	bl	4a8 <waitForVSync>
+    pixel_buffer_start = *pixel_ctrl_ptr;        // Need to take buffer value to clear screen
+     b40:	e5143fdf 	ldr	r3, [r4, #-4063]	; 0xfffff021
+     b44:	e5853000 	str	r3, [r5]
+    clear_screen();                                // Clear screen in first
+     b48:	ebfffdcf 	bl	28c <clear_screen>
+    *(pixel_ctrl_ptr + 1) = SDRAM_BASE;            // Set back buffer to sdram
+     b4c:	e3a03103 	mov	r3, #-1073741824	; 0xc0000000
+     b50:	e5043fdb 	str	r3, [r4, #-4059]	; 0xfffff025
+
+    /* Read location of the pixel buffer from the pixel buffer controller */
+    pixel_buffer_start = *pixel_ctrl_ptr;
+     b54:	e5143fdf 	ldr	r3, [r4, #-4063]	; 0xfffff021
+     b58:	e5853000 	str	r3, [r5]
+		
+        new_clear_screen();
+		//faster_clear_screen(x_controlled, y_controlled);
+		//draw_background();
+			//testing draw the controlled cell
+		if((*key_address) & 0x1  && y_controlled < MAX_Y - AKAME_HEIGHT) {
+     b5c:	e30b1418 	movw	r1, #46104	; 0xb418
+     b60:	e3401001 	movt	r1, #1
+     b64:	e58d1028 	str	r1, [sp, #40]	; 0x28
+     b68:	e1a08005 	mov	r8, r5
+            
+            if (x_box[i] <= 0) {
+                dx_box[i] = 1;
+				dy_box[i] = (rand() % 2) * 2 - 1;
+			}
+            else if (x_box[i] >= MAX_X - VIRUS_LENGTH) {        // The four is from box width/height
+     b6c:	e3007132 	movw	r7, #306	; 0x132
+                dx_box[i] = -1;
+     b70:	e3e0a000 	mvn	r10, #0
+		draw_controlled_seryu(x_seryu, y_seryu); 
+		draw_controlled_kurame(x_kurame, y_kurame);
+		
+		
+        waitForVSync();
+        pixel_buffer_start = *(pixel_ctrl_ptr + 1);
+     b74:	e3032fff 	movw	r2, #16383	; 0x3fff
+     b78:	e34f2f20 	movt	r2, #65312	; 0xff20
+     b7c:	e58d202c 	str	r2, [sp, #44]	; 0x2c
+				&& (y_controlled <= y_box[i] + ESDEATH_HEIGHT || y_controlled + AKAME_HEIGHT > y_box[i]))
+				gameOver = true;
+		}
+		
+		
+        new_clear_screen();
+     b80:	ebffff30 	bl	848 <new_clear_screen>
+		//faster_clear_screen(x_controlled, y_controlled);
+		//draw_background();
+			//testing draw the controlled cell
+		if((*key_address) & 0x1  && y_controlled < MAX_Y - AKAME_HEIGHT) {
+     b84:	e59d0028 	ldr	r0, [sp, #40]	; 0x28
+     b88:	e51031b4 	ldr	r3, [r0, #-436]	; 0xfffffe4c
+     b8c:	e5932000 	ldr	r2, [r3]
+     b90:	e3120001 	tst	r2, #1
+     b94:	0a000003 	beq	ba8 <main+0x324>
+     b98:	e5982004 	ldr	r2, [r8, #4]
+     b9c:	e35200ab 	cmp	r2, #171	; 0xab
+			//draw_controlled_cell(x_controlled, y_controlled++,0xF000);
+			y_controlled+=2;
+     ba0:	d2822002 	addle	r2, r2, #2
+     ba4:	d5882004 	strle	r2, [r8, #4]
+		}	
+		if((*key_address) & 0x2 && y_controlled > 0) {
+     ba8:	e5932000 	ldr	r2, [r3]
+     bac:	e3120002 	tst	r2, #2
+     bb0:	0a000003 	beq	bc4 <main+0x340>
+     bb4:	e5982004 	ldr	r2, [r8, #4]
+     bb8:	e3520000 	cmp	r2, #0
+			//draw_controlled_cell(x_controlled, y_controlled--,0xF000);
+			y_controlled-=2;
+     bbc:	c2422002 	subgt	r2, r2, #2
+     bc0:	c5882004 	strgt	r2, [r8, #4]
+		}
+		if((*key_address) & 0x4 && x_controlled < MAX_X - AKAME_LENGTH) {
+     bc4:	e5932000 	ldr	r2, [r3]
+     bc8:	e3120004 	tst	r2, #4
+     bcc:	0a000003 	beq	be0 <main+0x35c>
+     bd0:	e5982008 	ldr	r2, [r8, #8]
+     bd4:	e35200ef 	cmp	r2, #239	; 0xef
+			//draw_controlled_cell(x_controlled++, y_controlled,0xF000);
+			x_controlled+=2;
+     bd8:	d2822002 	addle	r2, r2, #2
+     bdc:	d5882008 	strle	r2, [r8, #8]
+		}
+		if((*key_address) & 0x8 && x_controlled > 0) {
+     be0:	e5933000 	ldr	r3, [r3]
+     be4:	e3130008 	tst	r3, #8
+     be8:	0a000003 	beq	bfc <main+0x378>
+     bec:	e5983008 	ldr	r3, [r8, #8]
+     bf0:	e3530000 	cmp	r3, #0
+			//draw_controlled_cell(x_controlled--, y_controlled,0xF000);
+			x_controlled-=2;
+     bf4:	c2433002 	subgt	r3, r3, #2
+     bf8:	c5883008 	strgt	r3, [r8, #8]
+		}
+		draw_controlled_akame(x_controlled, y_controlled);
+     bfc:	e5980008 	ldr	r0, [r8, #8]
+     c00:	e5981004 	ldr	r1, [r8, #4]
+     c04:	ebfffe49 	bl	530 <draw_controlled_akame>
+     c08:	e3a04000 	mov	r4, #0
+       //     draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
+       // }
+        
+        for (int i = 0; i < MAX_RECTANGLES; i++) {
+			//if((i != 3)||(i != 2)||(i != 4)||(i != 6)||(i != 1)){draw_box(x_box[i], y_box[i], color_box[i]);}
+            x_box[i] += dx_box[i];
+     c0c:	e28d3044 	add	r3, sp, #68	; 0x44
+     c10:	e28d206c 	add	r2, sp, #108	; 0x6c
+     c14:	e19460b2 	ldrh	r6, [r4, r2]
+     c18:	e19420b3 	ldrh	r2, [r4, r3]
+     c1c:	e0866002 	add	r6, r6, r2
+     c20:	e6ff6076 	uxth	r6, r6
+     c24:	e18460b3 	strh	r6, [r4, r3]
+            y_box[i] += dy_box[i];
+     c28:	e28d3058 	add	r3, sp, #88	; 0x58
+     c2c:	e19450b3 	ldrh	r5, [r4, r3]
+     c30:	e2842030 	add	r2, r4, #48	; 0x30
+     c34:	e1a0100d 	mov	r1, sp
+     c38:	e19230b1 	ldrh	r3, [r2, r1]
+     c3c:	e0855003 	add	r5, r5, r3
+     c40:	e6ff5075 	uxth	r5, r5
+     c44:	e18250b1 	strh	r5, [r2, r1]
+            
+            if (x_box[i] <= 0) {
+     c48:	e6bf3076 	sxth	r3, r6
+     c4c:	e3530000 	cmp	r3, #0
+     c50:	ca00000b 	bgt	c84 <main+0x400>
+                dx_box[i] = 1;
+     c54:	e28d306c 	add	r3, sp, #108	; 0x6c
+     c58:	e3a00001 	mov	r0, #1
+     c5c:	e18400b3 	strh	r0, [r4, r3]
+				dy_box[i] = (rand() % 2) * 2 - 1;
+     c60:	eb0000de 	bl	fe0 <rand>
+     c64:	e0803fa0 	add	r3, r0, r0, lsr #31
+     c68:	e2033001 	and	r3, r3, #1
+     c6c:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     c70:	e1a03080 	lsl	r3, r0, #1
+     c74:	e2433001 	sub	r3, r3, #1
+     c78:	e28d2058 	add	r2, sp, #88	; 0x58
+     c7c:	e18430b2 	strh	r3, [r4, r2]
+     c80:	ea00000c 	b	cb8 <main+0x434>
+			}
+            else if (x_box[i] >= MAX_X - VIRUS_LENGTH) {        // The four is from box width/height
+     c84:	e6bf3076 	sxth	r3, r6
+     c88:	e1530007 	cmp	r3, r7
+     c8c:	da000009 	ble	cb8 <main+0x434>
+                dx_box[i] = -1;
+     c90:	e28d306c 	add	r3, sp, #108	; 0x6c
+     c94:	e184a0b3 	strh	r10, [r4, r3]
+				dy_box[i] = (rand() % 2) * 2 - 1;
+     c98:	eb0000d0 	bl	fe0 <rand>
+     c9c:	e0803fa0 	add	r3, r0, r0, lsr #31
+     ca0:	e2033001 	and	r3, r3, #1
+     ca4:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     ca8:	e1a03080 	lsl	r3, r0, #1
+     cac:	e2433001 	sub	r3, r3, #1
+     cb0:	e28d2058 	add	r2, sp, #88	; 0x58
+     cb4:	e18430b2 	strh	r3, [r4, r2]
+			}
+
+            if (y_box[i] <= 0) {
+     cb8:	e6bf3075 	sxth	r3, r5
+     cbc:	e3530000 	cmp	r3, #0
+     cc0:	ca00000b 	bgt	cf4 <main+0x470>
+                dy_box[i] = 1;
+     cc4:	e28d3058 	add	r3, sp, #88	; 0x58
+     cc8:	e3a01001 	mov	r1, #1
+     ccc:	e18410b3 	strh	r1, [r4, r3]
+				dx_box[i] = (rand() % 2) * 2 - 1;
+     cd0:	eb0000c2 	bl	fe0 <rand>
+     cd4:	e0803fa0 	add	r3, r0, r0, lsr #31
+     cd8:	e2033001 	and	r3, r3, #1
+     cdc:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     ce0:	e1a03080 	lsl	r3, r0, #1
+     ce4:	e2433001 	sub	r3, r3, #1
+     ce8:	e28d206c 	add	r2, sp, #108	; 0x6c
+     cec:	e18430b2 	strh	r3, [r4, r2]
+     cf0:	ea00000c 	b	d28 <main+0x4a4>
+			}
+            else if (y_box[i] >= MAX_Y - VIRUS_HEIGHT) {
+     cf4:	e6bf3075 	sxth	r3, r5
+     cf8:	e35300e2 	cmp	r3, #226	; 0xe2
+     cfc:	da000009 	ble	d28 <main+0x4a4>
+                dy_box[i] = -1;
+     d00:	e28d3058 	add	r3, sp, #88	; 0x58
+     d04:	e184a0b3 	strh	r10, [r4, r3]
+				dx_box[i] = (rand() % 2) * 2 - 1;
+     d08:	eb0000b4 	bl	fe0 <rand>
+     d0c:	e0803fa0 	add	r3, r0, r0, lsr #31
+     d10:	e2033001 	and	r3, r3, #1
+     d14:	e0430fa0 	sub	r0, r3, r0, lsr #31
+     d18:	e1a03080 	lsl	r3, r0, #1
+     d1c:	e2433001 	sub	r3, r3, #1
+     d20:	e28d206c 	add	r2, sp, #108	; 0x6c
+     d24:	e18430b2 	strh	r3, [r4, r2]
+			}
+			
+			draw_controlled_image(x_box[i], y_box[i]);
+     d28:	e6bf0076 	sxth	r0, r6
+     d2c:	e6bf1075 	sxth	r1, r5
+     d30:	ebfffe96 	bl	790 <draw_controlled_image>
+     d34:	e2844002 	add	r4, r4, #2
+		
+       // for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
+       //     draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
+       // }
+        
+        for (int i = 0; i < MAX_RECTANGLES; i++) {
+     d38:	e3540014 	cmp	r4, #20
+     d3c:	1affffb2 	bne	c0c <main+0x388>
+			
+			draw_controlled_image(x_box[i], y_box[i]);
+        }
+		
+		
+		if (x_esdeath <= 0)
+     d40:	e6bf307b 	sxth	r3, r11
+     d44:	e3530000 	cmp	r3, #0
+     d48:	da000007 	ble	d6c <main+0x4e8>
+			dx_esdeath = 1;
+        else if (x_esdeath >= MAX_X - 40)
+     d4c:	e1a01003 	mov	r1, r3
+			dx_esdeath = -1;
+     d50:	e30f3fff 	movw	r3, #65535	; 0xffff
+     d54:	e3002117 	movw	r2, #279	; 0x117
+     d58:	e59d0010 	ldr	r0, [sp, #16]
+     d5c:	e1510002 	cmp	r1, r2
+     d60:	c1a00003 	movgt	r0, r3
+     d64:	e58d0010 	str	r0, [sp, #16]
+     d68:	ea000001 	b	d74 <main+0x4f0>
+			draw_controlled_image(x_box[i], y_box[i]);
+        }
+		
+		
+		if (x_esdeath <= 0)
+			dx_esdeath = 1;
+     d6c:	e3a01001 	mov	r1, #1
+     d70:	e58d1010 	str	r1, [sp, #16]
+        else if (x_esdeath >= MAX_X - 40)
+			dx_esdeath = -1;
+
+        if (y_esdeath <= 0)
+     d74:	e59d2000 	ldr	r2, [sp]
+     d78:	e6bf3072 	sxth	r3, r2
+     d7c:	e3530000 	cmp	r3, #0
+     d80:	da000006 	ble	da0 <main+0x51c>
+        	dy_esdeath = 1;
+        else if (y_esdeath >= MAX_Y - 37)
+     d84:	e6bf2072 	sxth	r2, r2
+			dy_esdeath = -1;
+     d88:	e30f3fff 	movw	r3, #65535	; 0xffff
+     d8c:	e59d0014 	ldr	r0, [sp, #20]
+     d90:	e35200ca 	cmp	r2, #202	; 0xca
+     d94:	c1a00003 	movgt	r0, r3
+     d98:	e58d0014 	str	r0, [sp, #20]
+     d9c:	ea000001 	b	da8 <main+0x524>
+			dx_esdeath = 1;
+        else if (x_esdeath >= MAX_X - 40)
+			dx_esdeath = -1;
+
+        if (y_esdeath <= 0)
+        	dy_esdeath = 1;
+     da0:	e3a01001 	mov	r1, #1
+     da4:	e58d1014 	str	r1, [sp, #20]
+        else if (y_esdeath >= MAX_Y - 37)
+			dy_esdeath = -1;
+		
+		if (x_seryu <= 0)
+     da8:	e59d2004 	ldr	r2, [sp, #4]
+     dac:	e6bf3072 	sxth	r3, r2
+     db0:	e3530000 	cmp	r3, #0
+     db4:	da000007 	ble	dd8 <main+0x554>
+			dx_seryu = 1;
+        else if (x_seryu >= MAX_X - 60)
+     db8:	e1a01003 	mov	r1, r3
+			dx_seryu = -1;
+     dbc:	e30f3fff 	movw	r3, #65535	; 0xffff
+     dc0:	e3002103 	movw	r2, #259	; 0x103
+     dc4:	e59d0018 	ldr	r0, [sp, #24]
+     dc8:	e1510002 	cmp	r1, r2
+     dcc:	c1a00003 	movgt	r0, r3
+     dd0:	e58d0018 	str	r0, [sp, #24]
+     dd4:	ea000001 	b	de0 <main+0x55c>
+        	dy_esdeath = 1;
+        else if (y_esdeath >= MAX_Y - 37)
+			dy_esdeath = -1;
+		
+		if (x_seryu <= 0)
+			dx_seryu = 1;
+     dd8:	e3a01001 	mov	r1, #1
+     ddc:	e58d1018 	str	r1, [sp, #24]
+        else if (x_seryu >= MAX_X - 60)
+			dx_seryu = -1;
+
+        if (y_seryu <= 0)
+     de0:	e59d2008 	ldr	r2, [sp, #8]
+     de4:	e6bf3072 	sxth	r3, r2
+     de8:	e3530000 	cmp	r3, #0
+     dec:	da000006 	ble	e0c <main+0x588>
+        	dy_seryu = 1;
+        else if (y_seryu >= MAX_Y - 46)
+     df0:	e6bf2072 	sxth	r2, r2
+			dy_seryu = -1;
+     df4:	e30f3fff 	movw	r3, #65535	; 0xffff
+     df8:	e59d001c 	ldr	r0, [sp, #28]
+     dfc:	e35200c1 	cmp	r2, #193	; 0xc1
+     e00:	c1a00003 	movgt	r0, r3
+     e04:	e58d001c 	str	r0, [sp, #28]
+     e08:	ea000001 	b	e14 <main+0x590>
+			dx_seryu = 1;
+        else if (x_seryu >= MAX_X - 60)
+			dx_seryu = -1;
+
+        if (y_seryu <= 0)
+        	dy_seryu = 1;
+     e0c:	e3a01001 	mov	r1, #1
+     e10:	e58d101c 	str	r1, [sp, #28]
+        else if (y_seryu >= MAX_Y - 46)
+			dy_seryu = -1;
+		
+		if (x_kurame <= 0)
+     e14:	e59d200c 	ldr	r2, [sp, #12]
+     e18:	e6bf3072 	sxth	r3, r2
+     e1c:	e3530000 	cmp	r3, #0
+     e20:	da000007 	ble	e44 <main+0x5c0>
+			dx_kurame = 1;
+        else if (x_kurame >= MAX_X - 58)
+     e24:	e1a01003 	mov	r1, r3
+			dx_kurame = -1;
+     e28:	e30f3fff 	movw	r3, #65535	; 0xffff
+     e2c:	e3002105 	movw	r2, #261	; 0x105
+     e30:	e59d0020 	ldr	r0, [sp, #32]
+     e34:	e1510002 	cmp	r1, r2
+     e38:	c1a00003 	movgt	r0, r3
+     e3c:	e58d0020 	str	r0, [sp, #32]
+     e40:	ea000001 	b	e4c <main+0x5c8>
+        	dy_seryu = 1;
+        else if (y_seryu >= MAX_Y - 46)
+			dy_seryu = -1;
+		
+		if (x_kurame <= 0)
+			dx_kurame = 1;
+     e44:	e3a01001 	mov	r1, #1
+     e48:	e58d1020 	str	r1, [sp, #32]
+        else if (x_kurame >= MAX_X - 58)
+			dx_kurame = -1;
+
+        if (y_kurame <= 0)
+     e4c:	e6bf3079 	sxth	r3, r9
+     e50:	e3530000 	cmp	r3, #0
+     e54:	da000006 	ble	e74 <main+0x5f0>
+        	dy_kurame = 1;
+        else if (y_kurame >= MAX_Y - 60)
+     e58:	e1a02003 	mov	r2, r3
+			dy_kurame = -1;
+     e5c:	e30f3fff 	movw	r3, #65535	; 0xffff
+     e60:	e59d0024 	ldr	r0, [sp, #36]	; 0x24
+     e64:	e35200b3 	cmp	r2, #179	; 0xb3
+     e68:	c1a00003 	movgt	r0, r3
+     e6c:	e58d0024 	str	r0, [sp, #36]	; 0x24
+     e70:	ea000001 	b	e7c <main+0x5f8>
+			dx_kurame = 1;
+        else if (x_kurame >= MAX_X - 58)
+			dx_kurame = -1;
+
+        if (y_kurame <= 0)
+        	dy_kurame = 1;
+     e74:	e3a01001 	mov	r1, #1
+     e78:	e58d1024 	str	r1, [sp, #36]	; 0x24
+        else if (y_kurame >= MAX_Y - 60)
+			dy_kurame = -1;
+		
+		
+		x_esdeath += dx_esdeath;
+     e7c:	e59d2010 	ldr	r2, [sp, #16]
+     e80:	e082300b 	add	r3, r2, r11
+     e84:	e6ffb073 	uxth	r11, r3
+		y_esdeath += dy_esdeath;
+     e88:	e59d0014 	ldr	r0, [sp, #20]
+     e8c:	e59d1000 	ldr	r1, [sp]
+     e90:	e0803001 	add	r3, r0, r1
+     e94:	e6ff3073 	uxth	r3, r3
+     e98:	e58d3000 	str	r3, [sp]
+		x_seryu += dx_seryu;
+     e9c:	e59d2018 	ldr	r2, [sp, #24]
+     ea0:	e59d0004 	ldr	r0, [sp, #4]
+     ea4:	e0823000 	add	r3, r2, r0
+     ea8:	e6ff3073 	uxth	r3, r3
+     eac:	e58d3004 	str	r3, [sp, #4]
+		y_seryu += dy_seryu;
+     eb0:	e59d101c 	ldr	r1, [sp, #28]
+     eb4:	e59d2008 	ldr	r2, [sp, #8]
+     eb8:	e0813002 	add	r3, r1, r2
+     ebc:	e6ff3073 	uxth	r3, r3
+     ec0:	e58d3008 	str	r3, [sp, #8]
+		x_kurame += dx_kurame;
+     ec4:	e59d0020 	ldr	r0, [sp, #32]
+     ec8:	e59d100c 	ldr	r1, [sp, #12]
+     ecc:	e0803001 	add	r3, r0, r1
+     ed0:	e6ff3073 	uxth	r3, r3
+     ed4:	e58d300c 	str	r3, [sp, #12]
+		y_kurame += dy_kurame;
+     ed8:	e59d2024 	ldr	r2, [sp, #36]	; 0x24
+     edc:	e0829009 	add	r9, r2, r9
+     ee0:	e6ff9079 	uxth	r9, r9
+		
+        draw_controlled_esdeath(x_esdeath, y_esdeath);
+     ee4:	e6bf007b 	sxth	r0, r11
+     ee8:	e59d3000 	ldr	r3, [sp]
+     eec:	e6bf1073 	sxth	r1, r3
+     ef0:	ebfffdba 	bl	5e0 <draw_controlled_esdeath>
+		draw_controlled_seryu(x_seryu, y_seryu); 
+     ef4:	e59d1004 	ldr	r1, [sp, #4]
+     ef8:	e6bf0071 	sxth	r0, r1
+     efc:	e59d2008 	ldr	r2, [sp, #8]
+     f00:	e6bf1072 	sxth	r1, r2
+     f04:	ebfffddf 	bl	688 <draw_controlled_seryu>
+		draw_controlled_kurame(x_kurame, y_kurame);
+     f08:	e59d300c 	ldr	r3, [sp, #12]
+     f0c:	e6bf0073 	sxth	r0, r3
+     f10:	e6bf1079 	sxth	r1, r9
+     f14:	ebfffdfb 	bl	708 <draw_controlled_kurame>
+		
+		
+        waitForVSync();
+     f18:	ebfffd62 	bl	4a8 <waitForVSync>
+        pixel_buffer_start = *(pixel_ctrl_ptr + 1);
+     f1c:	e59d002c 	ldr	r0, [sp, #44]	; 0x2c
+     f20:	e5103fdb 	ldr	r3, [r0, #-4059]	; 0xfffff025
+     f24:	e5883000 	str	r3, [r8]
+    }
+     f28:	eaffff14 	b	b80 <main+0x2fc>
+
+00000f2c <endgame>:
+			draw_controlled_grid( x, y);
+        }
+    }
+}
+
+void endgame() {
+     f2c:	e92d40f8 	push	{r3, r4, r5, r6, r7, lr}
+     f30:	e3a05000 	mov	r5, #0
+     f34:	e1a07005 	mov	r7, r5
+	for (unsigned short x = 0; x < MAX_X; x++) {
+        for (unsigned short y = 0; y < MAX_Y; y++) {
+            //plot_pixel(x, y, 0xFFFF);    // this is white
+			plot_pixel(x, y, 0xFFFF);
+     f38:	e3e06000 	mvn	r6, #0
+     f3c:	ea000009 	b	f68 <endgame+0x3c>
+     f40:	e1a00005 	mov	r0, r5
+     f44:	e1a01004 	mov	r1, r4
+     f48:	e1a02006 	mov	r2, r6
+     f4c:	ebfffcc7 	bl	270 <plot_pixel>
+     f50:	e2844001 	add	r4, r4, #1
+    }
+}
+
+void endgame() {
+	for (unsigned short x = 0; x < MAX_X; x++) {
+        for (unsigned short y = 0; y < MAX_Y; y++) {
+     f54:	e35400f0 	cmp	r4, #240	; 0xf0
+     f58:	1afffff8 	bne	f40 <endgame+0x14>
+     f5c:	e2855001 	add	r5, r5, #1
+        }
+    }
+}
+
+void endgame() {
+	for (unsigned short x = 0; x < MAX_X; x++) {
+     f60:	e3550d05 	cmp	r5, #320	; 0x140
+     f64:	08bd80f8 	popeq	{r3, r4, r5, r6, r7, pc}
+			draw_controlled_grid( x, y);
+        }
+    }
+}
+
+void endgame() {
+     f68:	e1a04007 	mov	r4, r7
+     f6c:	eafffff3 	b	f40 <endgame+0x14>
+
+00000f70 <atexit>:
+     f70:	e1a01000 	mov	r1, r0
+     f74:	e3a00000 	mov	r0, #0
+     f78:	e92d4008 	push	{r3, lr}
+     f7c:	e1a02000 	mov	r2, r0
+     f80:	e1a03000 	mov	r3, r0
+     f84:	eb00002c 	bl	103c <__register_exitproc>
+     f88:	e8bd4008 	pop	{r3, lr}
+     f8c:	e12fff1e 	bx	lr
+
+00000f90 <exit>:
+     f90:	e92d4008 	push	{r3, lr}
+     f94:	e3a01000 	mov	r1, #0
+     f98:	e1a04000 	mov	r4, r0
+     f9c:	eb000063 	bl	1130 <__call_exitprocs>
+     fa0:	e59f3018 	ldr	r3, [pc, #24]	; fc0 <exit+0x30>
+     fa4:	e5930000 	ldr	r0, [r3]
+     fa8:	e590303c 	ldr	r3, [r0, #60]	; 0x3c
+     fac:	e3530000 	cmp	r3, #0
+     fb0:	11a0e00f 	movne	lr, pc
+     fb4:	112fff13 	bxne	r3
+     fb8:	e1a00004 	mov	r0, r4
+     fbc:	eb0000e7 	bl	1360 <_exit>
+     fc0:	00001420 	.word	0x00001420
+
+00000fc4 <srand>:
+     fc4:	e59f3010 	ldr	r3, [pc, #16]	; fdc <srand+0x18>
+     fc8:	e5933000 	ldr	r3, [r3]
+     fcc:	e3a02000 	mov	r2, #0
+     fd0:	e58300a8 	str	r0, [r3, #168]	; 0xa8
+     fd4:	e58320ac 	str	r2, [r3, #172]	; 0xac
+     fd8:	e12fff1e 	bx	lr
+     fdc:	0001b268 	.word	0x0001b268
+
+00000fe0 <rand>:
+     fe0:	e52d4004 	push	{r4}		; (str r4, [sp, #-4]!)
+     fe4:	e59f3044 	ldr	r3, [pc, #68]	; 1030 <rand+0x50>
+     fe8:	e593c000 	ldr	r12, [r3]
+     fec:	e59f4040 	ldr	r4, [pc, #64]	; 1034 <rand+0x54>
+     ff0:	e59c20a8 	ldr	r2, [r12, #168]	; 0xa8
+     ff4:	e0040492 	mul	r4, r2, r4
+     ff8:	e59c10ac 	ldr	r1, [r12, #172]	; 0xac
+     ffc:	e59f3034 	ldr	r3, [pc, #52]	; 1038 <rand+0x58>
+    1000:	e0244193 	mla	r4, r3, r1, r4
+    1004:	e0810392 	umull	r0, r1, r2, r3
+    1008:	e3a02001 	mov	r2, #1
+    100c:	e0922000 	adds	r2, r2, r0
+    1010:	e0841001 	add	r1, r4, r1
+    1014:	e3a03000 	mov	r3, #0
+    1018:	e0a33001 	adc	r3, r3, r1
+    101c:	e58c20a8 	str	r2, [r12, #168]	; 0xa8
+    1020:	e58c30ac 	str	r3, [r12, #172]	; 0xac
+    1024:	e3c30102 	bic	r0, r3, #-2147483648	; 0x80000000
+    1028:	e8bd0010 	ldmfd	sp!, {r4}
+    102c:	e12fff1e 	bx	lr
+    1030:	0001b268 	.word	0x0001b268
+    1034:	5851f42d 	.word	0x5851f42d
+    1038:	4c957f2d 	.word	0x4c957f2d
+
+0000103c <__register_exitproc>:
+    103c:	e59fc0e4 	ldr	r12, [pc, #228]	; 1128 <__register_exitproc+0xec>
+    1040:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+    1044:	e59c4000 	ldr	r4, [r12]
+    1048:	e594c148 	ldr	r12, [r4, #328]	; 0x148
+    104c:	e35c0000 	cmp	r12, #0
+    1050:	0284cf53 	addeq	r12, r4, #332	; 0x14c
+    1054:	e59c5004 	ldr	r5, [r12, #4]
+    1058:	0584c148 	streq	r12, [r4, #328]	; 0x148
+    105c:	e355001f 	cmp	r5, #31
+    1060:	e24dd010 	sub	sp, sp, #16
+    1064:	e1a06000 	mov	r6, r0
+    1068:	da000015 	ble	10c4 <__register_exitproc+0x88>
+    106c:	e59f00b8 	ldr	r0, [pc, #184]	; 112c <__register_exitproc+0xf0>
+    1070:	e3500000 	cmp	r0, #0
+    1074:	1a000001 	bne	1080 <__register_exitproc+0x44>
+    1078:	e3e00000 	mvn	r0, #0
+    107c:	ea000018 	b	10e4 <__register_exitproc+0xa8>
+    1080:	e3a00e19 	mov	r0, #400	; 0x190
+    1084:	e58d100c 	str	r1, [sp, #12]
+    1088:	e58d2008 	str	r2, [sp, #8]
+    108c:	e58d3004 	str	r3, [sp, #4]
+    1090:	e320f000 	nop	{0}
+    1094:	e250c000 	subs	r12, r0, #0
+    1098:	e59d100c 	ldr	r1, [sp, #12]
+    109c:	e59d2008 	ldr	r2, [sp, #8]
+    10a0:	e59d3004 	ldr	r3, [sp, #4]
+    10a4:	0afffff3 	beq	1078 <__register_exitproc+0x3c>
+    10a8:	e5945148 	ldr	r5, [r4, #328]	; 0x148
+    10ac:	e3a00000 	mov	r0, #0
+    10b0:	e58c0004 	str	r0, [r12, #4]
+    10b4:	e58c5000 	str	r5, [r12]
+    10b8:	e584c148 	str	r12, [r4, #328]	; 0x148
+    10bc:	e58c0188 	str	r0, [r12, #392]	; 0x188
+    10c0:	e58c018c 	str	r0, [r12, #396]	; 0x18c
+    10c4:	e3560000 	cmp	r6, #0
+    10c8:	e59c4004 	ldr	r4, [r12, #4]
+    10cc:	1a000007 	bne	10f0 <__register_exitproc+0xb4>
+    10d0:	e2843002 	add	r3, r4, #2
+    10d4:	e2844001 	add	r4, r4, #1
+    10d8:	e78c1103 	str	r1, [r12, r3, lsl #2]
+    10dc:	e58c4004 	str	r4, [r12, #4]
+    10e0:	e3a00000 	mov	r0, #0
+    10e4:	e28dd010 	add	sp, sp, #16
+    10e8:	e8bd41f0 	pop	{r4, r5, r6, r7, r8, lr}
+    10ec:	e12fff1e 	bx	lr
+    10f0:	e3a00001 	mov	r0, #1
+    10f4:	e1a00410 	lsl	r0, r0, r4
+    10f8:	e08c8104 	add	r8, r12, r4, lsl #2
+    10fc:	e3560002 	cmp	r6, #2
+    1100:	e59c7188 	ldr	r7, [r12, #392]	; 0x188
+    1104:	e5883108 	str	r3, [r8, #264]	; 0x108
+    1108:	059c318c 	ldreq	r3, [r12, #396]	; 0x18c
+    110c:	e1877000 	orr	r7, r7, r0
+    1110:	01830000 	orreq	r0, r3, r0
+    1114:	e1a05008 	mov	r5, r8
+    1118:	e5882088 	str	r2, [r8, #136]	; 0x88
+    111c:	e58c7188 	str	r7, [r12, #392]	; 0x188
+    1120:	058c018c 	streq	r0, [r12, #396]	; 0x18c
+    1124:	eaffffe9 	b	10d0 <__register_exitproc+0x94>
+    1128:	00001420 	.word	0x00001420
+    112c:	00000000 	.word	0x00000000
+
+00001130 <__call_exitprocs>:
+    1130:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+    1134:	e59f3168 	ldr	r3, [pc, #360]	; 12a4 <__call_exitprocs+0x174>
+    1138:	e5933000 	ldr	r3, [r3]
+    113c:	e24dd014 	sub	sp, sp, #20
+    1140:	e58d3004 	str	r3, [sp, #4]
+    1144:	e2833f52 	add	r3, r3, #328	; 0x148
+    1148:	e58d0008 	str	r0, [sp, #8]
+    114c:	e58d300c 	str	r3, [sp, #12]
+    1150:	e1a07001 	mov	r7, r1
+    1154:	e3a08001 	mov	r8, #1
+    1158:	e59d3004 	ldr	r3, [sp, #4]
+    115c:	e5936148 	ldr	r6, [r3, #328]	; 0x148
+    1160:	e3560000 	cmp	r6, #0
+    1164:	e59db00c 	ldr	r11, [sp, #12]
+    1168:	0a000033 	beq	123c <__call_exitprocs+0x10c>
+    116c:	e5965004 	ldr	r5, [r6, #4]
+    1170:	e2554001 	subs	r4, r5, #1
+    1174:	5286a088 	addpl	r10, r6, #136	; 0x88
+    1178:	5285501f 	addpl	r5, r5, #31
+    117c:	508a5105 	addpl	r5, r10, r5, lsl #2
+    1180:	5a000007 	bpl	11a4 <__call_exitprocs+0x74>
+    1184:	ea000029 	b	1230 <__call_exitprocs+0x100>
+    1188:	e5953000 	ldr	r3, [r5]
+    118c:	e1530007 	cmp	r3, r7
+    1190:	0a000005 	beq	11ac <__call_exitprocs+0x7c>
+    1194:	e2444001 	sub	r4, r4, #1
+    1198:	e3740001 	cmn	r4, #1
+    119c:	e2455004 	sub	r5, r5, #4
+    11a0:	0a000022 	beq	1230 <__call_exitprocs+0x100>
+    11a4:	e3570000 	cmp	r7, #0
+    11a8:	1afffff6 	bne	1188 <__call_exitprocs+0x58>
+    11ac:	e5963004 	ldr	r3, [r6, #4]
+    11b0:	e06a2005 	rsb	r2, r10, r5
+    11b4:	e2433001 	sub	r3, r3, #1
+    11b8:	e0862002 	add	r2, r6, r2
+    11bc:	e1530004 	cmp	r3, r4
+    11c0:	e5123078 	ldr	r3, [r2, #-120]	; 0xffffff88
+    11c4:	13a01000 	movne	r1, #0
+    11c8:	05864004 	streq	r4, [r6, #4]
+    11cc:	15021078 	strne	r1, [r2, #-120]	; 0xffffff88
+    11d0:	e3530000 	cmp	r3, #0
+    11d4:	0affffee 	beq	1194 <__call_exitprocs+0x64>
+    11d8:	e1a02418 	lsl	r2, r8, r4
+    11dc:	e5961188 	ldr	r1, [r6, #392]	; 0x188
+    11e0:	e1120001 	tst	r2, r1
+    11e4:	e5969004 	ldr	r9, [r6, #4]
+    11e8:	0a000016 	beq	1248 <__call_exitprocs+0x118>
+    11ec:	e596118c 	ldr	r1, [r6, #396]	; 0x18c
+    11f0:	e1120001 	tst	r2, r1
+    11f4:	1a000016 	bne	1254 <__call_exitprocs+0x124>
+    11f8:	e59d0008 	ldr	r0, [sp, #8]
+    11fc:	e5151080 	ldr	r1, [r5, #-128]	; 0xffffff80
+    1200:	e1a0e00f 	mov	lr, pc
+    1204:	e12fff13 	bx	r3
+    1208:	e5963004 	ldr	r3, [r6, #4]
+    120c:	e1530009 	cmp	r3, r9
+    1210:	1affffd0 	bne	1158 <__call_exitprocs+0x28>
+    1214:	e59b3000 	ldr	r3, [r11]
+    1218:	e1530006 	cmp	r3, r6
+    121c:	1affffcd 	bne	1158 <__call_exitprocs+0x28>
+    1220:	e2444001 	sub	r4, r4, #1
+    1224:	e3740001 	cmn	r4, #1
+    1228:	e2455004 	sub	r5, r5, #4
+    122c:	1affffdc 	bne	11a4 <__call_exitprocs+0x74>
+    1230:	e59f1070 	ldr	r1, [pc, #112]	; 12a8 <__call_exitprocs+0x178>
+    1234:	e3510000 	cmp	r1, #0
+    1238:	1a000009 	bne	1264 <__call_exitprocs+0x134>
+    123c:	e28dd014 	add	sp, sp, #20
+    1240:	e8bd4ff0 	pop	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+    1244:	e12fff1e 	bx	lr
+    1248:	e1a0e00f 	mov	lr, pc
+    124c:	e12fff13 	bx	r3
+    1250:	eaffffec 	b	1208 <__call_exitprocs+0xd8>
+    1254:	e5150080 	ldr	r0, [r5, #-128]	; 0xffffff80
+    1258:	e1a0e00f 	mov	lr, pc
+    125c:	e12fff13 	bx	r3
+    1260:	eaffffe8 	b	1208 <__call_exitprocs+0xd8>
+    1264:	e5963004 	ldr	r3, [r6, #4]
+    1268:	e3530000 	cmp	r3, #0
+    126c:	e5963000 	ldr	r3, [r6]
+    1270:	1a000008 	bne	1298 <__call_exitprocs+0x168>
+    1274:	e3530000 	cmp	r3, #0
+    1278:	0a000006 	beq	1298 <__call_exitprocs+0x168>
+    127c:	e1a00006 	mov	r0, r6
+    1280:	e58b3000 	str	r3, [r11]
+    1284:	e320f000 	nop	{0}
+    1288:	e59b6000 	ldr	r6, [r11]
+    128c:	e3560000 	cmp	r6, #0
+    1290:	1affffb5 	bne	116c <__call_exitprocs+0x3c>
+    1294:	eaffffe8 	b	123c <__call_exitprocs+0x10c>
+    1298:	e1a0b006 	mov	r11, r6
+    129c:	e1a06003 	mov	r6, r3
+    12a0:	eafffff9 	b	128c <__call_exitprocs+0x15c>
+    12a4:	00001420 	.word	0x00001420
+    12a8:	00000000 	.word	0x00000000
+
+000012ac <register_fini>:
+    12ac:	e92d4008 	push	{r3, lr}
+    12b0:	e59f3010 	ldr	r3, [pc, #16]	; 12c8 <register_fini+0x1c>
+    12b4:	e3530000 	cmp	r3, #0
+    12b8:	159f000c 	ldrne	r0, [pc, #12]	; 12cc <register_fini+0x20>
+    12bc:	1bffff2b 	blne	f70 <atexit>
+    12c0:	e8bd4008 	pop	{r3, lr}
+    12c4:	e12fff1e 	bx	lr
+    12c8:	00001448 	.word	0x00001448
+    12cc:	000012d0 	.word	0x000012d0
+
+000012d0 <__libc_fini_array>:
+    12d0:	e92d4038 	push	{r3, r4, r5, lr}
+    12d4:	e59f5030 	ldr	r5, [pc, #48]	; 130c <__libc_fini_array+0x3c>
+    12d8:	e59f4030 	ldr	r4, [pc, #48]	; 1310 <__libc_fini_array+0x40>
+    12dc:	e0654004 	rsb	r4, r5, r4
+    12e0:	e1b04144 	asrs	r4, r4, #2
+    12e4:	10855104 	addne	r5, r5, r4, lsl #2
+    12e8:	0a000004 	beq	1300 <__libc_fini_array+0x30>
+    12ec:	e5353004 	ldr	r3, [r5, #-4]!
+    12f0:	e1a0e00f 	mov	lr, pc
+    12f4:	e12fff13 	bx	r3
+    12f8:	e2544001 	subs	r4, r4, #1
+    12fc:	1afffffa 	bne	12ec <__libc_fini_array+0x1c>
+    1300:	eb000050 	bl	1448 <__libc_fini>
+    1304:	e8bd4038 	pop	{r3, r4, r5, lr}
+    1308:	e12fff1e 	bx	lr
+    130c:	00001460 	.word	0x00001460
+    1310:	00001464 	.word	0x00001464
+
+00001314 <__cs3_premain>:
+    1314:	e92d4008 	push	{r3, lr}
+    1318:	eb00001d 	bl	1394 <__libc_init_array>
+    131c:	e59f3030 	ldr	r3, [pc, #48]	; 1354 <__cs3_premain+0x40>
+    1320:	e3530000 	cmp	r3, #0
+    1324:	15930000 	ldrne	r0, [r3]
+    1328:	01a00003 	moveq	r0, r3
+    132c:	e59f3024 	ldr	r3, [pc, #36]	; 1358 <__cs3_premain+0x44>
+    1330:	e3530000 	cmp	r3, #0
+    1334:	15931000 	ldrne	r1, [r3]
+    1338:	01a01003 	moveq	r1, r3
+    133c:	e3a02000 	mov	r2, #0
+    1340:	ebfffd4f 	bl	884 <main>
+    1344:	e59f3010 	ldr	r3, [pc, #16]	; 135c <__cs3_premain+0x48>
+    1348:	e3530000 	cmp	r3, #0
+    134c:	1bffff0f 	blne	f90 <exit>
+    1350:	eafffffe 	b	1350 <__cs3_premain+0x3c>
+	...
+    135c:	00000f90 	.word	0x00000f90
+
+00001360 <_exit>:
+    1360:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+    1364:	e3a00018 	mov	r0, #24
+    1368:	e59f1004 	ldr	r1, [pc, #4]	; 1374 <_exit+0x14>
+    136c:	ef123456 	svc	0x00123456
+    1370:	eafffffe 	b	1370 <_exit+0x10>
+    1374:	00020026 	.word	0x00020026
+
+00001378 <__cs3_isr_interrupt>:
+    1378:	eafffffe 	b	1378 <__cs3_isr_interrupt>
+
+0000137c <__cs3_isr_undef>:
+    137c:	eafffffe 	b	137c <__cs3_isr_undef>
+
+00001380 <__cs3_isr_swi>:
+    1380:	eafffffe 	b	1380 <__cs3_isr_swi>
+
+00001384 <__cs3_isr_pabort>:
+    1384:	eafffffe 	b	1384 <__cs3_isr_pabort>
+
+00001388 <__cs3_isr_dabort>:
+    1388:	eafffffe 	b	1388 <__cs3_isr_dabort>
+
+0000138c <__cs3_isr_irq>:
+    138c:	eafffffe 	b	138c <__cs3_isr_irq>
+
+00001390 <__cs3_isr_fiq>:
+    1390:	eafffffe 	b	1390 <__cs3_isr_fiq>
+
+00001394 <__libc_init_array>:
+    1394:	e92d4070 	push	{r4, r5, r6, lr}
+    1398:	e59f506c 	ldr	r5, [pc, #108]	; 140c <__libc_init_array+0x78>
+    139c:	e59f606c 	ldr	r6, [pc, #108]	; 1410 <__libc_init_array+0x7c>
+    13a0:	e0656006 	rsb	r6, r5, r6
+    13a4:	e1b06146 	asrs	r6, r6, #2
+    13a8:	12455004 	subne	r5, r5, #4
+    13ac:	13a04000 	movne	r4, #0
+    13b0:	0a000005 	beq	13cc <__libc_init_array+0x38>
+    13b4:	e5b53004 	ldr	r3, [r5, #4]!
+    13b8:	e2844001 	add	r4, r4, #1
+    13bc:	e1a0e00f 	mov	lr, pc
+    13c0:	e12fff13 	bx	r3
+    13c4:	e1560004 	cmp	r6, r4
+    13c8:	1afffff9 	bne	13b4 <__libc_init_array+0x20>
+    13cc:	e59f5040 	ldr	r5, [pc, #64]	; 1414 <__libc_init_array+0x80>
+    13d0:	e59f6040 	ldr	r6, [pc, #64]	; 1418 <__libc_init_array+0x84>
+    13d4:	e0656006 	rsb	r6, r5, r6
+    13d8:	eb000012 	bl	1428 <_init>
+    13dc:	e1b06146 	asrs	r6, r6, #2
+    13e0:	12455004 	subne	r5, r5, #4
+    13e4:	13a04000 	movne	r4, #0
+    13e8:	0a000005 	beq	1404 <__libc_init_array+0x70>
+    13ec:	e5b53004 	ldr	r3, [r5, #4]!
+    13f0:	e2844001 	add	r4, r4, #1
+    13f4:	e1a0e00f 	mov	lr, pc
+    13f8:	e12fff13 	bx	r3
+    13fc:	e1560004 	cmp	r6, r4
+    1400:	1afffff9 	bne	13ec <__libc_init_array+0x58>
+    1404:	e8bd4070 	pop	{r4, r5, r6, lr}
+    1408:	e12fff1e 	bx	lr
+    140c:	00001440 	.word	0x00001440
+    1410:	00001440 	.word	0x00001440
+    1414:	00001440 	.word	0x00001440
+    1418:	00001448 	.word	0x00001448
+
+Disassembly of section .rodata:
+
+00001420 <_global_impure_ptr>:
+    1420:	0001b270 00000043                       p...C...
+
+00001428 <_init>:
+    1428:	e1a0c00d 	mov	r12, sp
+    142c:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
+    1430:	e24cb004 	sub	r11, r12, #4
+    1434:	e24bd028 	sub	sp, r11, #40	; 0x28
+    1438:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
+    143c:	e12fff1e 	bx	lr
+
+00001440 <__init_array_start>:
+    1440:	000012ac 	.word	0x000012ac
+
+00001444 <__frame_dummy_init_array_entry>:
+    1444:	00000208                                ....
+
+00001448 <__libc_fini>:
+    1448:	e1a0c00d 	mov	r12, sp
+    144c:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
+    1450:	e24cb004 	sub	r11, r12, #4
+    1454:	e24bd028 	sub	sp, r11, #40	; 0x28
+    1458:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
+    145c:	e12fff1e 	bx	lr
+
+00001460 <__fini_array_start>:
+    1460:	000001c4 	.word	0x000001c4
+
+00001464 <__cs3_regions>:
+	...
+    1470:	0001b6a0 	.word	0x0001b6a0
+    1474:	00000028 	.word	0x00000028
