@@ -14,7 +14,7 @@
             <source_file filepath="true">project_cpulator.c</source_file>
         </source_files>
         <options>
-            <compiler_flags>-g -O1</compiler_flags>
+            <compiler_flags>-g -O1 -std=c11</compiler_flags>
         </options>
         <linker_sections type="Basic">
             <linker_section name=".text">

@@ -583,6 +583,7 @@ void draw_box(int, int, short);
 void swap(int*, int*);
 void plot_pixel(int, int, short);
 void waitForVSync();
+void clear_character_buffer();
     
 
 
@@ -594,17 +595,24 @@ void draw_controlled_akame(int x, int y);
 void draw_controlled_esdeath(int x, int y);
 void draw_controlled_seryu(int x, int y) ;
 void draw_controlled_kurame(int x, int y);
+void show_score();
+
 
 void draw_controlled_grid(int x, int y);
 void new_clear_screen();
 void endgame();
-double powC(double x, double y);
+double powC(double x, unsigned int y);
 double sqrtC(double n);
 
 volatile int pixel_buffer_start; // global variable
 
-short x_controlled = 0;
-short y_controlled = 0;
+short x_controlled = 0,
+	  y_controlled = 0,
+	  dx_controlled = 0,
+      dy_controlled = 0,
+	  dxl_controlled = 0,
+      dyl_controlled = 0;
+unsigned int score = 0;
 
 volatile int* key_address = (int *)KEY_BASE;// we can extract the data for whether pressed or not by look at the value at this address
 // int check_key_press = *key_address;
@@ -627,6 +635,8 @@ int main(void)
     short color_box[MAX_RECTANGLES],
         dx_box[MAX_RECTANGLES],
         dy_box[MAX_RECTANGLES],
+		dxl_box[MAX_RECTANGLES],
+	 	dyl_box[MAX_RECTANGLES],
         x_box[MAX_RECTANGLES],
         y_box[MAX_RECTANGLES],
 		x_akame_center = AKAME_LENGTH/2,
@@ -635,17 +645,25 @@ int main(void)
 		y_esdeath = rand() % (MAX_Y - 37 - AKAME_HEIGHT) + AKAME_HEIGHT,
 		dx_esdeath = (rand() % 2) * 2 - 1,
 		dy_esdeath = (rand() % 2) * 2 - 1,
+	    dxl_esdeath = 0,
+		dyl_esdeath = 0,
 		x_seryu = rand() % (MAX_X - 60 - AKAME_LENGTH) + AKAME_LENGTH,
 		y_seryu = rand() % (MAX_Y - 46 - AKAME_HEIGHT) + AKAME_HEIGHT,
 		dx_seryu = (rand() % 2) * 2 - 1,
 		dy_seryu = (rand() % 2) * 2 - 1,
+		dxl_seryu = 0,
+		dyl_seryu = 0,
 		x_kurame = rand() % (MAX_X - 58 - AKAME_LENGTH) + AKAME_LENGTH,
 		y_kurame = rand() % (MAX_Y - 60 - AKAME_HEIGHT) + AKAME_HEIGHT,
 		dx_kurame = (rand() % 2) * 2 - 1,
-		dy_kurame = (rand() % 2) * 2 - 1;
+		dy_kurame = (rand() % 2) * 2 - 1,
+		dxl_kurame = 0,
+		dyl_kurame = 0;
     
     for (int i = 0; i < MAX_RECTANGLES; i++) {
         color_box[i] = colors[rand() % 20];
+		dxl_box[i] = 0;
+        dyl_box[i] = 0;
         dx_box[i] = (rand() % 2) * 2 - 1;
         dy_box[i] = (rand() % 2) * 2 - 1;
         x_box[i] = rand() % (MAX_X - 13 - AKAME_LENGTH) + AKAME_LENGTH;
@@ -668,11 +686,13 @@ int main(void)
 
     /* Read location of the pixel buffer from the pixel buffer controller */
     pixel_buffer_start = *pixel_ctrl_ptr;
-    
+    clear_character_buffer();
 
 	
     
     while (!gameOver) {
+		
+		
 		
 		//Caluculate center of Akame image
 		x_akame_center = x_controlled + AKAME_LENGTH/2;
@@ -684,26 +704,26 @@ int main(void)
 		for (unsigned short i = 0; i < MAX_RECTANGLES; i++) {
 			x2_center = x_box[i] + VIRUS_LENGTH/2;
 			y2_center = y_box[i] + VIRUS_HEIGHT/2;
-			if (sqrt(pow(x_akame_center-x2_center, 2) + pow(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + VIRUS_LENGTH/2)
+			if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + VIRUS_LENGTH/2)
 				gameOver = true;
 		}
 		
 		//Check collision of Akame with Esdeath
 		x2_center = x_esdeath + ESDEATH_LENGTH/2;
 		y2_center = y_esdeath + ESDEATH_HEIGHT/2;
-		if (sqrt(pow(x_akame_center-x2_center, 2) + pow(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + ESDEATH_HEIGHT/2)
+		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + ESDEATH_HEIGHT/2)
 			gameOver = true;
 		
 		//Check collision of Akame with Seryu
 		x2_center = x_seryu + SERYU_LENGTH/2;
 		y2_center = y_seryu + SERYU_HEIGHT/2;
-		if (sqrt(pow(x_akame_center-x2_center, 2) + pow(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + SERYU_HEIGHT/2)
+		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + SERYU_HEIGHT/2)
 			gameOver = true;
 		
 		//Check collision of Akame with Kurame
 		x2_center = x_kurame + KURAME_LENGTH/2;
 		y2_center = y_kurame + KURAME_HEIGHT/2;
-		if (sqrt(pow(x_akame_center-x2_center, 2) + pow(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + KURAME_HEIGHT/2)
+		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + KURAME_HEIGHT/2)
 			gameOver = true;
 		
 		
@@ -742,8 +762,7 @@ int main(void)
         
         for (int i = 0; i < MAX_RECTANGLES; i++) {
 			//if((i != 3)||(i != 2)||(i != 4)||(i != 6)||(i != 1)){draw_box(x_box[i], y_box[i], color_box[i]);}
-            x_box[i] += dx_box[i];
-            y_box[i] += dy_box[i];
+           
             
             if (x_box[i] <= 0) {
                 dx_box[i] = 1;
@@ -762,6 +781,9 @@ int main(void)
                 dy_box[i] = -1;
 				dx_box[i] = (rand() % 2) * 2 - 1;
 			}
+			
+			x_box[i] += dx_box[i];
+            y_box[i] += dy_box[i];
 			
 			draw_controlled_image(x_box[i], y_box[i]);
         }
@@ -809,13 +831,14 @@ int main(void)
 		draw_controlled_seryu(x_seryu, y_seryu); 
 		draw_controlled_kurame(x_kurame, y_kurame);
 		
-		
+		score++;
         waitForVSync();
         pixel_buffer_start = *(pixel_ctrl_ptr + 1);
     }
 	
 	while (gameOver) {
 		endgame();
+		show_score();
 		waitForVSync();
         pixel_buffer_start = *(pixel_ctrl_ptr + 1);
 	}
@@ -924,7 +947,7 @@ void faster_clear_screen(int x, int y) {// realized that this function should on
 	
 }
 
-// End of project.c
+
 
 //trying draw the image 13x13
 //void draw_controlled_image(int x, int y) {
@@ -1036,6 +1059,110 @@ void new_clear_screen() {
     }
 }
 
+void erase_akame(unsigned short x, unsigned short y) {
+	unsigned short color, tempX = x, tempY;
+	while (x < x + AKAME_LENGTH) {
+		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
+				color = 0xffff;
+			else
+				color - 0x04df;
+			plot_pixel(x,y,color);
+			plot_pixel(x+1,y,color);
+			plot_pixel(x,y+1,color);
+			plot_pixel(x+1,y+1,color);
+		tempY = y;
+		while (y < y + AKAME_HEIGHT) {
+			
+			tempY++;
+		}
+		tempX++;
+	}
+}
+
+void erase_seryu(unsigned short x, unsigned short y) {
+	unsigned short color, tempX = x;
+	while (tempX < x + SERYU_LENGTH) {
+		if ((tempX % 20 < 10 && y % 20 < 10) || (tempX % 20 > 10 && y % 20 > 10))
+			color = 0xffff;
+		else
+			color - 0x04df;
+		plot_pixel(x,y,color);
+		tempX++;
+	}
+	
+	while (y < y + SERYU_HEIGHT) {
+		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
+			color = 0xffff;
+		else
+			color - 0x04df;
+		plot_pixel(x,y,color);
+		y++
+	}
+}
+
+void erase_esdeath(unsigned short x, unsigned short y) {
+	unsigned short color, tempX = x;
+	while (tempX < x + ESDEATH_LENGTH) {
+		if ((tempX % 20 < 10 && y % 20 < 10) || (tempX % 20 > 10 && y % 20 > 10))
+			color = 0xffff;
+		else
+			color - 0x04df;
+		plot_pixel(x,y,color);
+		tempX++;
+	}
+	
+	while (y < y + ESDEATH_HEIGHT) {
+		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
+			color = 0xffff;
+		else
+			color - 0x04df;
+		plot_pixel(x,y,color);
+		y++
+	}
+}
+
+void erase_kurame(unsigned short x, unsigned short y) {
+	unsigned short color, tempX = x;
+	while (tempX < x + KURAME_LENGTH) {
+		if ((tempX % 20 < 10 && y % 20 < 10) || (tempX % 20 > 10 && y % 20 > 10))
+			color = 0xffff;
+		else
+			color - 0x04df;
+		plot_pixel(x,y,color);
+		tempX++;
+	}
+	
+	while (y < y + KURAME_HEIGHT) {
+		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
+			color = 0xffff;
+		else
+			color - 0x04df;
+		plot_pixel(x,y,color);
+		y++
+	}
+}
+
+void erase_virus(unsigned short x, unsigned short y) {
+	unsigned short color, tempX = x;
+	while (tempX < x + VIRUS_LENGTH) {
+		if ((tempX % 20 < 10 && y % 20 < 10) || (tempX % 20 > 10 && y % 20 > 10))
+			color = 0xffff;
+		else
+			color - 0x04df;
+		plot_pixel(x,y,color);
+		tempX++;
+	}
+	
+	while (y < y + VIRUS_HEIGHT) {
+		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
+			color = 0xffff;
+		else
+			color - 0x04df;
+		plot_pixel(x,y,color);
+		y++
+	}
+}
+
 void endgame() {
 	for (unsigned short x = 0; x < MAX_X*2; x+=2) {
         for (unsigned short y = 0; y < MAX_Y; y++) {
@@ -1044,13 +1171,62 @@ void endgame() {
     } 
 }
 
+void show_score() {
+/*******************************************************************************
+* Subroutine to send a string of text to the video monitor
+******************************************************************************/
+	unsigned short x = (MAX_X - 40)/4, y = 1;		   
+	
+	char text_ptr[10] = {' '};
+
+	sprintf(text_ptr, "%d", score);
+
+	volatile char* character_buffer = (char *)FPGA_CHAR_BASE; // video character buffer
+	
+	/* assume that the text string fits on one line */
+	int offset = (y << 7) + x;
+	
+	for (int i = 0; i < 10; i++, offset++) {
+		*(character_buffer + offset) = text_ptr[i]; // write to the character buffer
+	}
+	
+	//while (*(text_ptr)) {
+	//	*(character_buffer + offset) = *(text_ptr); // write to the character buffer
+	//	++text_ptr;
+	//	++offset;
+	//}
+	
+	//Free doesn't seem to work here, and a memory overflow never seems to occur
+	//so I simply allow the malloc to accumulate and overflow eventually
+	//free(text_ptr);
+}
+
+void clear_character_buffer() {
+	char text_ptr = ' ';
+	unsigned short x, y;
+	
+	volatile char* character_buffer = (char *)FPGA_CHAR_BASE;
+	
+	x = 0;
+	while (x < 80) {
+		y = 0;
+		while (y < 60) {
+			*(character_buffer + (y << 7) + x) = text_ptr;
+			y++;
+		}
+		x++;
+	}
+}
+
 //Had to write a pow function
-double powC(double x, double y) {
+double powC(double x, unsigned int y) {
 	int i = 0;
 	double result = 1;
 	
-	while (i < y)
+	while (i < y) {
 		result *= x;
+		i++;
+	}
 	
 	return result;
 }
@@ -1090,4 +1266,4 @@ double sqrtC(double n){
 //}
 
 
-	
+// End of project.c
