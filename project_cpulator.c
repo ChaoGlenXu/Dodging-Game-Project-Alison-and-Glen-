@@ -574,6 +574,7 @@ int game_over[MAX_Y][MAX_X*2] = {
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 	
 #define MAX_RECTANGLES 3
     
@@ -604,14 +605,23 @@ void endgame();
 double powC(double x, unsigned int y);
 double sqrtC(double n);
 
+//Erasing functions
+void erase_akame(unsigned short x, unsigned short y);
+void erase_akameX(unsigned short x, unsigned short y);
+void erase_akameY(unsigned short x, unsigned short y);
+void erase_seryu(unsigned short x, unsigned short y);
+void erase_esdeath(unsigned short x, unsigned short y);
+void erase_kurame(unsigned short x, unsigned short y);
+void erase_virus(unsigned short x, unsigned short y);
+
 volatile int pixel_buffer_start; // global variable
 
 short x_controlled = 0,
 	  y_controlled = 0,
 	  dx_controlled = 0,
       dy_controlled = 0,
-	  dxl_controlled = 0,
-      dyl_controlled = 0;
+	  xl_controlled = 0,
+      yl_controlled = 0;
 unsigned int score = 0;
 
 volatile int* key_address = (int *)KEY_BASE;// we can extract the data for whether pressed or not by look at the value at this address
@@ -619,7 +629,7 @@ volatile int* key_address = (int *)KEY_BASE;// we can extract the data for wheth
 
 int main(void)
 {
-    
+    srand(time(0));
     volatile int * pixel_ctrl_ptr = (int *)PIXEL_BUF_CTRL_BASE;
 	
 	bool gameOver = false;
@@ -635,63 +645,87 @@ int main(void)
     short color_box[MAX_RECTANGLES],
         dx_box[MAX_RECTANGLES],
         dy_box[MAX_RECTANGLES],
-		dxl_box[MAX_RECTANGLES],
-	 	dyl_box[MAX_RECTANGLES],
+		xl_box[MAX_RECTANGLES],
+	 	yl_box[MAX_RECTANGLES],
         x_box[MAX_RECTANGLES],
         y_box[MAX_RECTANGLES],
 		x_akame_center = AKAME_LENGTH/2,
 		y_akame_center = AKAME_HEIGHT/2,
-		x_esdeath = rand() % (MAX_X - 40 - AKAME_LENGTH) + AKAME_LENGTH,
-		y_esdeath = rand() % (MAX_Y - 37 - AKAME_HEIGHT) + AKAME_HEIGHT,
+		x_esdeath = rand() % (MAX_X - ESDEATH_LENGTH - AKAME_LENGTH) + AKAME_LENGTH,
+		y_esdeath = rand() % (MAX_Y - ESDEATH_HEIGHT - AKAME_HEIGHT) + AKAME_HEIGHT,
 		dx_esdeath = (rand() % 2) * 2 - 1,
 		dy_esdeath = (rand() % 2) * 2 - 1,
-	    dxl_esdeath = 0,
-		dyl_esdeath = 0,
-		x_seryu = rand() % (MAX_X - 60 - AKAME_LENGTH) + AKAME_LENGTH,
-		y_seryu = rand() % (MAX_Y - 46 - AKAME_HEIGHT) + AKAME_HEIGHT,
+	    xl_esdeath = x_esdeath,
+		yl_esdeath = y_esdeath,
+		x_seryu = rand() % (MAX_X - SERYU_LENGTH - AKAME_LENGTH) + AKAME_LENGTH,
+		y_seryu = rand() % (MAX_Y - SERYU_HEIGHT - AKAME_HEIGHT) + AKAME_HEIGHT,
 		dx_seryu = (rand() % 2) * 2 - 1,
 		dy_seryu = (rand() % 2) * 2 - 1,
-		dxl_seryu = 0,
-		dyl_seryu = 0,
-		x_kurame = rand() % (MAX_X - 58 - AKAME_LENGTH) + AKAME_LENGTH,
-		y_kurame = rand() % (MAX_Y - 60 - AKAME_HEIGHT) + AKAME_HEIGHT,
+		xl_seryu = x_seryu,
+		yl_seryu = y_seryu,
+		x_kurame = rand() % (MAX_X - KURAME_LENGTH - AKAME_LENGTH) + AKAME_LENGTH,
+		y_kurame = rand() % (MAX_Y - KURAME_HEIGHT - AKAME_HEIGHT) + AKAME_HEIGHT,
 		dx_kurame = (rand() % 2) * 2 - 1,
 		dy_kurame = (rand() % 2) * 2 - 1,
-		dxl_kurame = 0,
-		dyl_kurame = 0;
+		xl_kurame = x_kurame,
+		yl_kurame = y_kurame;
     
     for (int i = 0; i < MAX_RECTANGLES; i++) {
         color_box[i] = colors[rand() % 20];
-		dxl_box[i] = 0;
-        dyl_box[i] = 0;
         dx_box[i] = (rand() % 2) * 2 - 1;
         dy_box[i] = (rand() % 2) * 2 - 1;
         x_box[i] = rand() % (MAX_X - 13 - AKAME_LENGTH) + AKAME_LENGTH;
         y_box[i] = rand() % (MAX_Y - 13 - AKAME_HEIGHT) + AKAME_HEIGHT;
+		xl_box[i] = x_box[i];
+        yl_box[i] = y_box[i];
     }
     
     
     *(pixel_ctrl_ptr + 1) = FPGA_ONCHIP_BASE;        //Set front buffer to onchip
-    pixel_buffer_start = *pixel_ctrl_ptr;        // Need to take buffer value to clear screen
-    clear_screen();                                // Empty screen here as well, it looks cleaner at start
+    pixel_buffer_start = *(pixel_ctrl_ptr + 1);        // Need to take buffer value to clear screen
+    new_clear_screen();                                // Empty screen here as well, it looks cleaner at start
     //draw_background();
 	//draw_akame();
 	//draw_controlled_akame(int x, int y);
 	
 	
 	waitForVSync();
-    pixel_buffer_start = *pixel_ctrl_ptr;        // Need to take buffer value to clear screen
-    clear_screen();                                // Clear screen in first
-    *(pixel_ctrl_ptr + 1) = SDRAM_BASE;            // Set back buffer to sdram
-
-    /* Read location of the pixel buffer from the pixel buffer controller */
-    pixel_buffer_start = *pixel_ctrl_ptr;
+	*(pixel_ctrl_ptr + 1) = SDRAM_BASE;            // Set back buffer to sdram
+    pixel_buffer_start = *(pixel_ctrl_ptr + 1);        // Need to take buffer value to clear screen
+    new_clear_screen();                                // Clear screen in first
+   
     clear_character_buffer();
 
 	
     
     while (!gameOver) {
 		
+		//Erase previous things on buffer
+		//Erase Akame (x first, then y)
+		erase_akame(xl_controlled, yl_controlled);
+		erase_kurame(xl_kurame, yl_kurame);
+		erase_esdeath(xl_esdeath, yl_esdeath);
+		erase_seryu(xl_seryu, yl_seryu);
+		
+		for (int i = 0; i < MAX_RECTANGLES; i++) {
+			erase_virus(xl_box[i], yl_box[i]);
+		}
+		
+		
+		//Set xl and yl values
+		xl_controlled = x_controlled;
+		yl_controlled = y_controlled;
+		xl_esdeath = x_esdeath;
+		yl_esdeath = y_esdeath;
+		xl_seryu = x_seryu;
+		yl_seryu = y_seryu;
+		xl_kurame = x_kurame;
+		yl_kurame = y_kurame;
+		
+		for (int i = 0; i < MAX_RECTANGLES; i++) {
+			xl_box[i] = x_box[i];
+			yl_box[i] = y_box[i];
+		}
 		
 		
 		//Caluculate center of Akame image
@@ -727,26 +761,34 @@ int main(void)
 			gameOver = true;
 		
 		
-        new_clear_screen();
+        //new_clear_screen();
+		
 		//faster_clear_screen(x_controlled, y_controlled);
 		//draw_background();
 			//testing draw the controlled cell
 		if((*key_address) & 0x4  && y_controlled < MAX_Y - AKAME_HEIGHT) {
 			//draw_controlled_cell(x_controlled, y_controlled++,0xF000);
-			y_controlled+=2;
+			dy_controlled = 2;
 		}	
-		if((*key_address) & 0x2 && y_controlled > 0) {
+		else if((*key_address) & 0x2 && y_controlled > 0) {
 			//draw_controlled_cell(x_controlled, y_controlled--,0xF000);
-			y_controlled-=2;
+			dy_controlled = -2;
 		}
+		else 
+			dy_controlled = 0;
 		if((*key_address) & 0x1 && x_controlled < MAX_X - AKAME_LENGTH) {
 			//draw_controlled_cell(x_controlled++, y_controlled,0xF000);
-			x_controlled+=2;
+			dx_controlled = 2;
 		}
-		if((*key_address) & 0x8 && x_controlled > 0) {
+		else if((*key_address) & 0x8 && x_controlled > 0) {
 			//draw_controlled_cell(x_controlled--, y_controlled,0xF000);
-			x_controlled-=2;
+			dx_controlled = -2;
 		}
+		else
+			dx_controlled = 0;
+		
+		x_controlled += dx_controlled;
+		y_controlled += dy_controlled;
 		draw_controlled_akame(x_controlled, y_controlled);
         
 		
@@ -1001,7 +1043,6 @@ void draw_controlled_esdeath(int x, int y) {
 
 //seryu[46][120]
 void draw_controlled_seryu(int x, int y) {
-
     for (unsigned short i = 0; i < 46; i++) {
 		int k = 0;
         for (unsigned short j = 0; j < (120); (j= j+2 )){
@@ -1060,106 +1101,100 @@ void new_clear_screen() {
 }
 
 void erase_akame(unsigned short x, unsigned short y) {
-	unsigned short color, tempX = x, tempY;
-	while (x < x + AKAME_LENGTH) {
-		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
-				color = 0xffff;
-			else
-				color - 0x04df;
-			plot_pixel(x,y,color);
-			plot_pixel(x+1,y,color);
-			plot_pixel(x,y+1,color);
-			plot_pixel(x+1,y+1,color);
-		tempY = y;
-		while (y < y + AKAME_HEIGHT) {
+	short color;
+    for (unsigned short i = 0; i < 68; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (160); (j= j+2 )){
 			
-			tempY++;
+			if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[0][0+1]<< 8) + akame[0][0]  ){
+			
+			}else{
+				if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[0][1+1]<< 8) + akame[0][1]  ){
+				}else{	
+					if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[3][9+1]<< 8) + akame[3][9]  ){
+					}else{	
+						if (((x+k) % 20 < 10 && (y+i) % 20 < 10) || ((x+k) % 20 >= 10 && (y+i) % 20 >= 10))
+							color = 0x04df;
+						else
+							color = 0xffff;
+            			plot_pixel(x+k, y+i,color);//0xF000
+					}	
+				}
+			}
+			k++;
 		}
-		tempX++;
-	}
-}
-
-void erase_seryu(unsigned short x, unsigned short y) {
-	unsigned short color, tempX = x;
-	while (tempX < x + SERYU_LENGTH) {
-		if ((tempX % 20 < 10 && y % 20 < 10) || (tempX % 20 > 10 && y % 20 > 10))
-			color = 0xffff;
-		else
-			color - 0x04df;
-		plot_pixel(x,y,color);
-		tempX++;
-	}
-	
-	while (y < y + SERYU_HEIGHT) {
-		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
-			color = 0xffff;
-		else
-			color - 0x04df;
-		plot_pixel(x,y,color);
-		y++
-	}
+    }
 }
 
 void erase_esdeath(unsigned short x, unsigned short y) {
-	unsigned short color, tempX = x;
-	while (tempX < x + ESDEATH_LENGTH) {
-		if ((tempX % 20 < 10 && y % 20 < 10) || (tempX % 20 > 10 && y % 20 > 10))
-			color = 0xffff;
-		else
-			color - 0x04df;
-		plot_pixel(x,y,color);
-		tempX++;
-	}
-	
-	while (y < y + ESDEATH_HEIGHT) {
-		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
-			color = 0xffff;
-		else
-			color - 0x04df;
-		plot_pixel(x,y,color);
-		y++
-	}
+	short color;
+    for (unsigned short i = 0; i < 37; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (80); (j= j+2 )){
+			if((((esdeath[i][j+1])<< 8) + ((esdeath[i][j]) ) ) == ((esdeath[0][0+1]<< 8) + esdeath[0][0]) ){
+				
+			}else{
+				if (((x+k) % 20 < 10 && (y+i) % 20 < 10) || ((x+k) % 20 >= 10 && (y+i) % 20 >= 10))
+					color = 0x04df;
+				else
+					color = 0xffff;
+            	plot_pixel(x +k , y + i, color);//0xF000
+			
+			}
+			k++;
+			//printf ((esdeath[i][j+1]<< 8) + esdeath[i][j]  );
+		}
+    }
+}
+
+void erase_seryu(unsigned short x, unsigned short y)  {
+	short color;
+    for (unsigned short i = 0; i < 46; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (120); (j= j+2 )){
+			if((((seryu[i][j+1])<< 8) + ((seryu[i][j]) ) ) == 0x0000){
+				//plot_pixel(x +k , y + i, 0xFFDF );	
+			}else{
+				if (((x+k) % 20 < 10 && (y+i) % 20 < 10) || ((x+k) % 20 >= 10 && (y+i) % 20 >= 10))
+					color = 0x04df;
+				else
+					color = 0xffff;
+            	plot_pixel(x +k , y + i, color);//0xF000
+			}
+			k++;
+		}
+    }
 }
 
 void erase_kurame(unsigned short x, unsigned short y) {
-	unsigned short color, tempX = x;
-	while (tempX < x + KURAME_LENGTH) {
-		if ((tempX % 20 < 10 && y % 20 < 10) || (tempX % 20 > 10 && y % 20 > 10))
-			color = 0xffff;
-		else
-			color - 0x04df;
-		plot_pixel(x,y,color);
-		tempX++;
-	}
-	
-	while (y < y + KURAME_HEIGHT) {
-		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
-			color = 0xffff;
-		else
-			color - 0x04df;
-		plot_pixel(x,y,color);
-		y++
-	}
+	short color;
+    for (unsigned short i = 0; i < 58; i++) {
+		int k = 0;
+        for (unsigned short j = 0; j < (120); (j= j+2 )){
+			if((((kurame[i][j+1])<< 8) + ((kurame[i][j]) ) ) == 0xffff){
+				//plot_pixel(x +k , y + i, 0xFFDF );	
+			}else{
+				if (((x+k) % 20 < 10 && (y+i) % 20 < 10) || ((x+k) % 20 >= 10 && (y+i) % 20 >= 10))
+					color = 0x04df;
+				else
+					color = 0xffff;
+            	plot_pixel(x +k , y + i, color);//0xF000
+			}
+			k++;
+		}
+    }
 }
 
 void erase_virus(unsigned short x, unsigned short y) {
-	unsigned short color, tempX = x;
-	while (tempX < x + VIRUS_LENGTH) {
-		if ((tempX % 20 < 10 && y % 20 < 10) || (tempX % 20 > 10 && y % 20 > 10))
-			color = 0xffff;
-		else
-			color - 0x04df;
-		plot_pixel(x,y,color);
-		tempX++;
-	}
-	
-	while (y < y + VIRUS_HEIGHT) {
-		if ((x % 20 < 10 && y % 20 < 10) || (x % 20 > 10 && y % 20 > 10))
-			color = 0xffff;
-		else
-			color - 0x04df;
-		plot_pixel(x,y,color);
-		y++
+	short color;
+	for (unsigned short i = 0; i < 13; i++) {
+		for (unsigned short j = 0; j < 13; j++) {
+			if (((x+i) % 20 < 10 && (y+j) % 20 < 10) || ((x+i) % 20 >= 10 && (y+j) % 20 >= 10))
+					color = 0x04df;
+				else
+					color = 0xffff;
+			plot_pixel(x + i, y + j, color);//0xF000
+		}
 	}
 }
 
