@@ -1,4 +1,4 @@
-#define AKAME_LENGTH 80
+​#define AKAME_LENGTH 80
 #define AKAME_HEIGHT 68
 #define KURAME_LENGTH 60
 #define KURAME_HEIGHT 58
@@ -828,28 +828,28 @@ int main(void)
         //user without a keyboard play (on physical board, not CPULATOR)
         if(((*key_address) & 0x4 || goDown) && y_controlled < MAX_Y - AKAME_HEIGHT) {
             //draw_controlled_cell(x_controlled, y_controlled++,0xF000);
-            dy_controlled = 2;
+            dy_controlled = 8;
         }
         else if(((*key_address) & 0x2 || goUp) && y_controlled > 0) {
             //draw_controlled_cell(x_controlled, y_controlled--,0xF000);
-            dy_controlled = -2;
+            dy_controlled = -8;
         }
         else
             dy_controlled = 0;
         if(((*key_address) & 0x1 || goRight) && x_controlled < MAX_X - AKAME_LENGTH) {
             //draw_controlled_cell(x_controlled++, y_controlled,0xF000);
-            dx_controlled = 2;
+            dx_controlled = 8;
         }
         else if(((*key_address) & 0x8 || goLeft) && x_controlled > 0) {
             //draw_controlled_cell(x_controlled--, y_controlled,0xF000);
-            dx_controlled = -2;
+            dx_controlled = -8;
         }
         else
             dx_controlled = 0;
         
         x_controlled += dx_controlled;
         y_controlled += dy_controlled;
-        draw_controlled_akame(x_controlled, y_controlled);
+        draw_controlled_akame(x_controlled  , y_controlled  );
         
 
         //Process movement for viruses, draw them as well
@@ -1397,3 +1397,4 @@ double sqrtC(double n){
 }
 
 // End of project.c
+
