@@ -625,12 +625,17 @@ short x_controlled = 0,
 unsigned int score = 0;
 
 volatile int* key_address = (int *)KEY_BASE;// we can extract the data for whether pressed or not by look at the value at this address
+volatile int* keyboard_address = (int *) PS2_BASE;
 // int check_key_press = *key_address;
 
 int main(void)
 {
     srand(time(0));
     volatile int * pixel_ctrl_ptr = (int *)PIXEL_BUF_CTRL_BASE;
+	int PS2_data;
+	short RVALID;
+	char byte1 = 0, byte2 = 0, byte3 = 0;
+	bool goUp = false, goDown = false, goLeft = false, goRight = false;
 	
 	bool gameOver = false;
 	
@@ -738,26 +743,26 @@ int main(void)
 		for (unsigned short i = 0; i < MAX_RECTANGLES; i++) {
 			x2_center = x_box[i] + VIRUS_LENGTH/2;
 			y2_center = y_box[i] + VIRUS_HEIGHT/2;
-			if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + VIRUS_LENGTH/2)
+			if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + VIRUS_HEIGHT/2)
 				gameOver = true;
 		}
 		
 		//Check collision of Akame with Esdeath
 		x2_center = x_esdeath + ESDEATH_LENGTH/2;
 		y2_center = y_esdeath + ESDEATH_HEIGHT/2;
-		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + ESDEATH_HEIGHT/2)
+		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + ESDEATH_HEIGHT/2.3)
 			gameOver = true;
 		
 		//Check collision of Akame with Seryu
 		x2_center = x_seryu + SERYU_LENGTH/2;
 		y2_center = y_seryu + SERYU_HEIGHT/2;
-		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + SERYU_HEIGHT/2)
+		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + SERYU_HEIGHT/2.3)
 			gameOver = true;
 		
 		//Check collision of Akame with Kurame
 		x2_center = x_kurame + KURAME_LENGTH/2;
 		y2_center = y_kurame + KURAME_HEIGHT/2;
-		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + KURAME_HEIGHT/2)
+		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + KURAME_HEIGHT/2.3)
 			gameOver = true;
 		
 		
@@ -766,21 +771,76 @@ int main(void)
 		//faster_clear_screen(x_controlled, y_controlled);
 		//draw_background();
 			//testing draw the controlled cell
-		if((*key_address) & 0x4  && y_controlled < MAX_Y - AKAME_HEIGHT) {
+		
+		//Get keyboard input, using FIFO buffer and three bytes storing the character inputs
+		//Stored like: byte1 byte2 byte3 (where 'break' is F0, and will be in byte1 or byte2)
+		int PS2_data;
+		short RVALID;
+		
+		PS2_data = *keyboard_address;
+		RVALID = PS2_data & 0x8000;
+		while (RVALID) {
+			byte1 = byte2;
+			byte2 = byte3;
+			byte3 = PS2_data & 0xFF;
+			
+			if (byte2 == 0xf0) {
+				switch (byte3) {
+					case 0x1d:
+						goUp = false;
+						break;
+					case 0x1b:
+						goDown = false;
+						break;
+					case 0x1c:
+						goLeft = false;
+						break;
+					case 0x23:
+						goRight = false;
+						break;
+					default:
+						break;
+				}
+			} else {
+				switch (byte3) {
+					case 0x1d:
+						goUp = true;
+						break;
+					case 0x1b:
+						goDown = true;
+						break;
+					case 0x1c:
+						goLeft = true;
+						break;
+					case 0x23:
+						goRight = true;
+						break;
+					default:
+						break;
+				}
+			}
+			
+			PS2_data = *keyboard_address;
+			RVALID = PS2_data & 0x8000;
+		}
+		
+		
+		
+		if(((*key_address) & 0x4 || goDown) && y_controlled < MAX_Y - AKAME_HEIGHT) {
 			//draw_controlled_cell(x_controlled, y_controlled++,0xF000);
 			dy_controlled = 2;
 		}	
-		else if((*key_address) & 0x2 && y_controlled > 0) {
+		else if(((*key_address) & 0x2 || goUp) && y_controlled > 0) {
 			//draw_controlled_cell(x_controlled, y_controlled--,0xF000);
 			dy_controlled = -2;
 		}
 		else 
 			dy_controlled = 0;
-		if((*key_address) & 0x1 && x_controlled < MAX_X - AKAME_LENGTH) {
+		if(((*key_address) & 0x1 || goRight) && x_controlled < MAX_X - AKAME_LENGTH) {
 			//draw_controlled_cell(x_controlled++, y_controlled,0xF000);
 			dx_controlled = 2;
 		}
-		else if((*key_address) & 0x8 && x_controlled > 0) {
+		else if(((*key_address) & 0x8 || goLeft) && x_controlled > 0) {
 			//draw_controlled_cell(x_controlled--, y_controlled,0xF000);
 			dx_controlled = -2;
 		}
@@ -1210,19 +1270,26 @@ void show_score() {
 /*******************************************************************************
 * Subroutine to send a string of text to the video monitor
 ******************************************************************************/
-	unsigned short x = (MAX_X - 40)/4, y = 1;		   
+	unsigned short x = (MAX_X - 40)/4 - 7, y = 1;		   
 	
-	char text_ptr[10] = {' '};
+	char text_ptr1[6] = {'S', 'c', 'o', 'r', 'e', ':'};
+	char text_ptr2[10] = {' '};
 
-	sprintf(text_ptr, "%d", score);
+	sprintf(text_ptr2, "%d", score);
 
 	volatile char* character_buffer = (char *)FPGA_CHAR_BASE; // video character buffer
 	
 	/* assume that the text string fits on one line */
 	int offset = (y << 7) + x;
 	
+	for (int i = 0; i < 6; i++, offset++) {
+		*(character_buffer + offset) = text_ptr1[i]; // write to the character buffer
+	}
+	
+	offset++;
+	
 	for (int i = 0; i < 10; i++, offset++) {
-		*(character_buffer + offset) = text_ptr[i]; // write to the character buffer
+		*(character_buffer + offset) = text_ptr2[i]; // write to the character buffer
 	}
 	
 	//while (*(text_ptr)) {
