@@ -577,6 +577,8 @@ int game_over[MAX_Y][MAX_X*2] = {
 #include <time.h>
 	
 #define MAX_RECTANGLES 3
+#define BG_COLOR_1 0x041F		//blue
+#define BG_COLOR_2 0xCE79		//yellow
     
 void clear_screen();
 void draw_line(int, int, int, int, short);
@@ -750,7 +752,7 @@ int main(void)
 		//Check collision of Akame with Esdeath
 		x2_center = x_esdeath + ESDEATH_LENGTH/2;
 		y2_center = y_esdeath + ESDEATH_HEIGHT/2;
-		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + ESDEATH_HEIGHT/2.3)
+		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + ESDEATH_HEIGHT/2.4)
 			gameOver = true;
 		
 		//Check collision of Akame with Seryu
@@ -762,7 +764,7 @@ int main(void)
 		//Check collision of Akame with Kurame
 		x2_center = x_kurame + KURAME_LENGTH/2;
 		y2_center = y_kurame + KURAME_HEIGHT/2;
-		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + KURAME_HEIGHT/2.3)
+		if (sqrtC(powC(x_akame_center-x2_center, 2) + powC(y_akame_center-y2_center, 2)) < AKAME_HEIGHT/2 + KURAME_HEIGHT/2.4)
 			gameOver = true;
 		
 		
@@ -784,6 +786,7 @@ int main(void)
 			byte2 = byte3;
 			byte3 = PS2_data & 0xFF;
 			
+			//If there was a BREAK, see what key was released
 			if (byte2 == 0xf0) {
 				switch (byte3) {
 					case 0x1d:
@@ -801,7 +804,7 @@ int main(void)
 					default:
 						break;
 				}
-			} else {
+			} else {	//If there wasn't a break, see what key was pressed
 				switch (byte3) {
 					case 0x1d:
 						goUp = true;
@@ -824,8 +827,9 @@ int main(void)
 			RVALID = PS2_data & 0x8000;
 		}
 		
-		
-		
+
+		//Akame responds to both KEY inputs and ps2 keyboard, designed to allow the
+		//user without a keyboard play (on physical board, not CPULATOR)
 		if(((*key_address) & 0x4 || goDown) && y_controlled < MAX_Y - AKAME_HEIGHT) {
 			//draw_controlled_cell(x_controlled, y_controlled++,0xF000);
 			dy_controlled = 2;
@@ -851,26 +855,14 @@ int main(void)
 		y_controlled += dy_controlled;
 		draw_controlled_akame(x_controlled, y_controlled);
         
-		
-		//testing draw the image
-		//draw_controlled_image(100, 100);
-		//draw_akame();
-		//draw_controlled_akame(100, 100);
-		
-		
-       // for (int i = 0; i < MAX_RECTANGLES - 1; i++) {
-       //     draw_line(x_box[i], y_box[i], x_box[i+1], y_box[i+1], color_box[i]);
-       // }
-        
-        for (int i = 0; i < MAX_RECTANGLES; i++) {
-			//if((i != 3)||(i != 2)||(i != 4)||(i != 6)||(i != 1)){draw_box(x_box[i], y_box[i], color_box[i]);}
-           
-            
+
+		//Process movement for viruses, draw them as well
+        for (int i = 0; i < MAX_RECTANGLES; i++) {           
             if (x_box[i] <= 0) {
                 dx_box[i] = 1;
 				dy_box[i] = (rand() % 2) * 2 - 1;
 			}
-            else if (x_box[i] >= MAX_X - VIRUS_LENGTH) {        // The four is from box width/height
+            else if (x_box[i] >= MAX_X - VIRUS_LENGTH) {
                 dx_box[i] = -1;
 				dy_box[i] = (rand() % 2) * 2 - 1;
 			}
@@ -887,40 +879,74 @@ int main(void)
 			x_box[i] += dx_box[i];
             y_box[i] += dy_box[i];
 			
+			//Check to make sure object is in bounds
+			if (x_box[i] <= 0) {
+                x_box[i] = 0;
+			}
+            else if (x_box[i] >= MAX_X - VIRUS_LENGTH) {
+                x_box[i] = MAX_X - VIRUS_LENGTH;
+			}
+
+            if (y_box[i] <= 0) {
+                y_box[i] = 0;
+			}
+            else if (y_box[i] >= MAX_Y - VIRUS_HEIGHT) {
+                y_box[i] = MAX_Y - VIRUS_HEIGHT;
+			}
+			
+			//Draw
 			draw_controlled_image(x_box[i], y_box[i]);
         }
 		
-		
-		if (x_esdeath <= 0)
-			dx_esdeath = 1;
-        else if (x_esdeath >= MAX_X - 40)
-			dx_esdeath = -1;
+		//Process movement for enemies, they have larger range of movement
+		//to make the game a little bit harder :)
+		if (x_esdeath <= 0) {
+			dx_esdeath = rand() % 3;
+			dy_esdeath = (rand() % 6) - 2;
+		} else if (x_esdeath >= MAX_X - ESDEATH_LENGTH) {
+			dx_esdeath = (rand() % 3) - 2;
+			dy_esdeath = (rand() % 6) - 2;
+		}
 
-        if (y_esdeath <= 0)
-        	dy_esdeath = 1;
-        else if (y_esdeath >= MAX_Y - 37)
-			dy_esdeath = -1;
+        if (y_esdeath <= 0) {
+        	dy_esdeath = rand() % 3;
+			dx_esdeath = (rand() % 6) - 2;
+		} else if (y_esdeath >= MAX_Y - ESDEATH_HEIGHT) {
+			dy_esdeath = (rand() % 3) - 2;
+			dx_esdeath = (rand() % 6) - 2;
+		}
 		
-		if (x_seryu <= 0)
-			dx_seryu = 1;
-        else if (x_seryu >= MAX_X - 60)
-			dx_seryu = -1;
+		if (x_seryu <= 0) {
+			dx_seryu = rand() % 3;
+			dy_seryu = (rand() % 6) - 2;
+		} else if (x_seryu >= MAX_X - SERYU_LENGTH) {
+			dx_seryu = (rand() % 3) - 2;
+			dy_seryu = (rand() % 6) - 2;
+		}
 
-        if (y_seryu <= 0)
-        	dy_seryu = 1;
-        else if (y_seryu >= MAX_Y - 46)
-			dy_seryu = -1;
+        if (y_seryu <= 0) {
+        	dy_seryu = rand() % 3;
+			dx_seryu = (rand() % 6) - 2;
+		} else if (y_seryu >= MAX_Y - SERYU_HEIGHT) {
+			dy_seryu = (rand() % 3) - 2;
+			dx_seryu = (rand() % 6) - 2;
+		}
 		
-		if (x_kurame <= 0)
-			dx_kurame = 1;
-        else if (x_kurame >= MAX_X - 58)
-			dx_kurame = -1;
+		if (x_kurame <= 0) {
+			dx_kurame = rand() % 3;
+			dy_kurame = (rand() % 6) - 2;
+		} else if (x_kurame >= MAX_X - KURAME_LENGTH) {
+			dx_kurame = (rand() % 3) - 2;
+			dy_kurame = (rand() % 6) - 2;
+		}
 
-        if (y_kurame <= 0)
-        	dy_kurame = 1;
-        else if (y_kurame >= MAX_Y - 60)
-			dy_kurame = -1;
-		
+        if (y_kurame <= 0) {
+        	dy_kurame = rand() % 3;
+			dx_kurame = (rand() % 6) - 2;
+		} else if (y_kurame >= MAX_Y - KURAME_HEIGHT) {
+			dy_kurame = (rand() % 3) - 2;
+			dx_kurame = (rand() % 6) - 2;
+		}
 		
 		x_esdeath += dx_esdeath;
 		y_esdeath += dy_esdeath;
@@ -929,15 +955,61 @@ int main(void)
 		x_kurame += dx_kurame;
 		y_kurame += dy_kurame;
 		
+		//Check to make sure object is within boundaries
+		if (x_esdeath <= 0) {
+			x_esdeath = 0;
+		} else if (x_esdeath >= MAX_X - ESDEATH_LENGTH) {
+			x_esdeath = MAX_X - ESDEATH_LENGTH;
+		}
+
+        if (y_esdeath <= 0) {
+        	y_esdeath = 0;
+		} else if (y_esdeath >= MAX_Y - ESDEATH_HEIGHT) {
+			y_esdeath = MAX_Y - ESDEATH_HEIGHT;
+		}
+		
+		if (x_seryu <= 0) {
+			x_seryu = 0;
+		} else if (x_seryu >= MAX_X - SERYU_LENGTH) {
+			x_seryu = MAX_X - SERYU_LENGTH;
+		}
+
+        if (y_seryu <= 0) {
+        	y_seryu = 0;
+		} else if (y_seryu >= MAX_Y - SERYU_HEIGHT) {
+			y_seryu = MAX_Y - SERYU_HEIGHT;
+		}
+		
+		if (x_kurame <= 0) {
+			x_kurame = 0;
+		} else if (x_kurame >= MAX_X - KURAME_LENGTH) {
+			x_kurame = MAX_X - KURAME_LENGTH;
+		}
+
+        if (y_kurame <= 0) {
+        	y_kurame = 0;
+		} else if (y_kurame >= MAX_Y - KURAME_HEIGHT) {
+			y_kurame = MAX_Y - KURAME_HEIGHT;
+		}
+		
+		
+		//Draw enemy characters
         draw_controlled_esdeath(x_esdeath, y_esdeath);
 		draw_controlled_seryu(x_seryu, y_seryu); 
 		draw_controlled_kurame(x_kurame, y_kurame);
 		
+		//Increment score and show it
 		score++;
+		show_score();
+		
+		//Wait for write to buffer to finish/vsync
         waitForVSync();
         pixel_buffer_start = *(pixel_ctrl_ptr + 1);
     }
 	
+	//After game ends, just show end game image and score in an infinite loop
+	//Player is using cpulator (probably) so they can click "Reload" and "Continue"
+	//to play again very easily
 	while (gameOver) {
 		endgame();
 		show_score();
@@ -1145,10 +1217,10 @@ void draw_controlled_image(int x, int y) {
 //draw_controlled_cell
 void draw_controlled_grid(int x, int y) {
 
-	draw_controlled_cell(x,y, 0x04DF);//0x04DF
-	draw_controlled_cell(x+10,y, 0xffff);
-	draw_controlled_cell(x,y+10, 0xffff);
-	draw_controlled_cell(x+10,y+10, 0x04DF);
+	draw_controlled_cell(x,y, BG_COLOR_1);
+	draw_controlled_cell(x+10,y, BG_COLOR_2);
+	draw_controlled_cell(x,y+10, BG_COLOR_2);
+	draw_controlled_cell(x+10,y+10, BG_COLOR_1);
 }
 
 void new_clear_screen() {
@@ -1174,9 +1246,9 @@ void erase_akame(unsigned short x, unsigned short y) {
 					if(  ((akame[i][j+1]<< 8) + akame[i][j]) ==  (akame[3][9+1]<< 8) + akame[3][9]  ){
 					}else{	
 						if (((x+k) % 20 < 10 && (y+i) % 20 < 10) || ((x+k) % 20 >= 10 && (y+i) % 20 >= 10))
-							color = 0x04df;
+							color = BG_COLOR_1;
 						else
-							color = 0xffff;
+							color = BG_COLOR_2;
             			plot_pixel(x+k, y+i,color);//0xF000
 					}	
 				}
@@ -1195,9 +1267,9 @@ void erase_esdeath(unsigned short x, unsigned short y) {
 				
 			}else{
 				if (((x+k) % 20 < 10 && (y+i) % 20 < 10) || ((x+k) % 20 >= 10 && (y+i) % 20 >= 10))
-					color = 0x04df;
+					color = BG_COLOR_1;
 				else
-					color = 0xffff;
+					color = BG_COLOR_2;
             	plot_pixel(x +k , y + i, color);//0xF000
 			
 			}
@@ -1216,9 +1288,9 @@ void erase_seryu(unsigned short x, unsigned short y)  {
 				//plot_pixel(x +k , y + i, 0xFFDF );	
 			}else{
 				if (((x+k) % 20 < 10 && (y+i) % 20 < 10) || ((x+k) % 20 >= 10 && (y+i) % 20 >= 10))
-					color = 0x04df;
+					color = BG_COLOR_1;
 				else
-					color = 0xffff;
+					color = BG_COLOR_2;
             	plot_pixel(x +k , y + i, color);//0xF000
 			}
 			k++;
@@ -1235,9 +1307,9 @@ void erase_kurame(unsigned short x, unsigned short y) {
 				//plot_pixel(x +k , y + i, 0xFFDF );	
 			}else{
 				if (((x+k) % 20 < 10 && (y+i) % 20 < 10) || ((x+k) % 20 >= 10 && (y+i) % 20 >= 10))
-					color = 0x04df;
+					color = BG_COLOR_1;
 				else
-					color = 0xffff;
+					color = BG_COLOR_2;
             	plot_pixel(x +k , y + i, color);//0xF000
 			}
 			k++;
@@ -1250,9 +1322,9 @@ void erase_virus(unsigned short x, unsigned short y) {
 	for (unsigned short i = 0; i < 13; i++) {
 		for (unsigned short j = 0; j < 13; j++) {
 			if (((x+i) % 20 < 10 && (y+j) % 20 < 10) || ((x+i) % 20 >= 10 && (y+j) % 20 >= 10))
-					color = 0x04df;
+					color = BG_COLOR_1;
 				else
-					color = 0xffff;
+					color = BG_COLOR_2;
 			plot_pixel(x + i, y + j, color);//0xF000
 		}
 	}
