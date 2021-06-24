@@ -10,3 +10,4 @@ This is a group project done by two Students at University of Toronto. The two s
 
 If you want to contact me to ask any qustions, you can contact me through email.
 
+My email address: chaoglen.xu@mail.utoronto.ca
