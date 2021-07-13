@@ -3,6 +3,7 @@ Dodge the virus.
 Programmed with C for the De1_SoC board.
 
 
+The video demo link: https://www.youtube.com/watch?v=ifs5lkAOlEk&t=2s
 
 
 This is a team project done by two Computer Engineering Students at University of Toronto. The two students are Chao Glen Xu and Alison Sabuwala.
