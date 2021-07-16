@@ -9,6 +9,8 @@ Programmed with C for the De1_SoC board like this picture below:
 
 The video demo link: https://www.youtube.com/watch?v=ifs5lkAOlEk&t=2s
 
+The game is tested on both De1_SoC board and the online ARM De1_SoC emulator called Cpulator. The demo in the video link shows how it is tested on the online ARM De1_SoC emulator.
+
 
 This is a team project done by two Computer Engineering Students at University of Toronto. The two students are Chao Glen Xu and Alison Sabuwala.
 
